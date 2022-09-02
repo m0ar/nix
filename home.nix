@@ -1,21 +1,17 @@
 { config, pkgs, ... }:
-
-{
-  # Home Manager needs a bit of information about you and the
-  # paths it should manage.
-  home.username = "m0ar";
-  home.homeDirectory = "/home/m0ar";
-
-  # This value determines the Home Manager release that your
-  # configuration is compatible with. This helps avoid breakage
-  # when a new Home Manager release introduces backwards
-  # incompatible changes.
-  #
-  # You can update Home Manager without changing this value. See
-  # the Home Manager release notes for a list of state version
-  # changes in each release.
-  home.stateVersion = "22.05";
-
-  # Let Home Manager install and manage itself.
+let
+  zshSettings = import ./zsh.nix;
+  gitSettings = import ./git.nix;
+in {
+  targets.genericLinux.enable = true;
+  nixpkgs.config.allowUnfree = true;
   programs.home-manager.enable = true;
-}
+  home.stateVersion = "22.11";
+  home.homeDirectory = "/home/m0ar";
+  home.username = "m0ar";
+
+  programs.zsh = zshSettings;
+  programs.git = gitSettings;
+  programs.direnv.enable = true;
+  programs.jq.enable = true;
+ }
