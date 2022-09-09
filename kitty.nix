@@ -1,9 +1,6 @@
-{ fontPkg }:
-{
+{ fontPkg }: {
   enable = true;
-  environment = {
-    TERM = "xterm-256color";
-  };
+  environment = { TERM = "xterm-256color"; };
   font = {
     package = fontPkg;
     name = "FiraCode";
@@ -13,4 +10,5 @@
     cursor_shape = "block";
     scrollback_lines = 20000;
   };
+  theme = "Afterglow";
 }

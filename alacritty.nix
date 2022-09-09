@@ -1,12 +1,10 @@
-{ zsh }:
-{
+{ zsh }: {
   enable = true;
   settings = {
-    env = {
-      TERM = "xterm-256color";
-    };
-    
-    font = let fam = { family = "FiraCode Nerd Font"; }; in {
+    env = { TERM = "xterm-256color"; };
+
+    font = let fam = { family = "FiraCode Nerd Font"; };
+    in {
 
       normal = fam // { style = "Regular"; };
       bold = fam // { style = "Bold"; };
@@ -18,8 +16,6 @@
       unfocused_hollow = true;
     };
 
-    shell = {
-      program = "${zsh}/bin/zsh";
-    };
+    shell = { program = "${zsh}/bin/zsh"; };
   };
 }

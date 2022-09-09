@@ -4,7 +4,7 @@
   enableAutosuggestions = true;
   enableVteIntegration = true;
   shellAliases = {
-    evl = "EVL_HOME=$(git root) nix run evl\#evl --";
+    evl = "EVL_HOME=$(git root) nix run evl#evl --";
     cp = "cp -i";
     ls = "ls --color=auto";
     nix = "noglob nix"; # makes flake URI play nice
@@ -46,10 +46,10 @@
       . /home/m0ar/.nix-profile/etc/profile.d/nix.sh
     fi
   '';
-  
+
   oh-my-zsh = {
     enable = true;
     theme = "amuse";
-    plugins = [];
+    plugins = [ ];
   };
 }
