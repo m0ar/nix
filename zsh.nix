@@ -8,6 +8,7 @@
     cp = "cp -i";
     ls = "ls --color=auto";
     nix = "noglob nix"; # makes flake URI play nice
+    ip = "ip --color=auto";
   };
   envExtra = ''
     export EDITOR=kak
