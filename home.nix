@@ -6,6 +6,7 @@ let
   gitConf = import ./git.nix;
   kittyConf = (import ./kitty.nix) { fontPkg = pkgs.fira-code; };
   tmuxConf = import ./tmux.nix;
+  rofiConf = import ./rofi.nix { inherit pkgs; };
 in {
   targets.genericLinux.enable = true;
   nixpkgs.config.allowUnfree = true;
@@ -30,7 +31,9 @@ in {
       colortest
 
       # nixpkgs
+      nix-tree
       nixfmt
+      bpytop
       google-cloud-sdk
       terraform
       ripgrep
@@ -42,6 +45,7 @@ in {
   programs.kitty = kittyConf;
   programs.git = gitConf;
   programs.tmux = tmuxConf;
+  programs.rofi = rofiConf;
   programs.direnv.enable = true;
   programs.jq.enable = true;
   programs.fzf.enable = true;

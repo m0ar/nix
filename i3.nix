@@ -177,14 +177,15 @@ in {
       "${modifier}+d" = "exec --no-startup-id dmenu_recency";
       "${modifier}+z" = "exec --no-startup-id morc-menu";
       "${modifier}+Ctrl+m" = "exec pavucontrol";
-      "XF86AudioPlay" = "exec 'playerctl play-pause'";
-      "XF86AudioNext" = "exec 'playerctl next'";
-      "XF86AudioPrev" = "exec 'playerctl previous'";
+      "XF86AudioPlay" = "exec --no-startup-id 'playerctl play-pause'";
+      "XF86AudioNext" = "exec --no-startup-id 'playerctl next'";
+      "XF86AudioPrev" = "exec --no-startup-id 'playerctl previous'";
       "Print" = "exec --no-startup-id i3-scrot";
       "${modifier}+Print" = "exec --no-startup-id i3-scrot -w";
       "${modifier}+Shift+Print" = "exec --no-startup-id i3-scrot -s";
       "${modifier}+Shift+Return" =
         "exec --no-startup-id /home/m0ar/scripts/lock.sh";
+      "Alt+space" = "exec --no-startup-id rofi";
     };
     startup = builtins.map (as: as // { notification = false; }) [
       { command = "nm-applet"; }
@@ -205,6 +206,7 @@ in {
       { command = "/home/m0ar/scripts/workspace-2.sh"; }
       { command = "systemctl --user start i3-session.target"; }
       { command = "pa-applet"; }
+      { command = "playerctld daemon"; }
     ];
     gaps = {
       smartBorders = "on";

@@ -26,4 +26,21 @@
     root = "rev-parse --show-toplevel";
   };
   delta.enable = true;
+  extraConfig = {
+    commit = {
+      gpgSign = true;
+    };
+    tag = {
+      gpgSign = true;
+    };
+    gpg = {
+      format = "ssh";
+      ssh = {
+        allowedSignersFile = "/home/m0ar/.ssh/allowed_signers";
+      };
+    };
+    user = {
+      signingKey = builtins.readFile /home/m0ar/.ssh/id_rsa.pub;
+    };
+  };
 }
