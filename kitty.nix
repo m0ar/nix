@@ -9,6 +9,8 @@
   settings = {
     cursor_shape = "block";
     scrollback_lines = 20000;
+    # confirm if more than one kitty window is open
+    confirm_os_window_close = 2;
   };
   theme = "Afterglow";
 }

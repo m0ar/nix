@@ -182,10 +182,10 @@ in {
       "XF86AudioPrev" = "exec --no-startup-id 'playerctl previous'";
       "Print" = "exec --no-startup-id i3-scrot";
       "${modifier}+Print" = "exec --no-startup-id i3-scrot -w";
-      "${modifier}+Shift+Print" = "exec --no-startup-id i3-scrot -s";
-      "${modifier}+Shift+Return" =
+      "--release ${modifier}+Shift+Print" = "exec --no-startup-id i3-scrot -s";
+      "--release ${modifier}+Shift+Return" =
         "exec --no-startup-id /home/m0ar/scripts/lock.sh";
-      "Alt+space" = "exec --no-startup-id rofi";
+      "${modifier}+Escape" = "exec rofi";
     };
     startup = builtins.map (as: as // { notification = false; }) [
       { command = "nm-applet"; }
