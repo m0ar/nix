@@ -7,13 +7,22 @@ let
   kittyConf = (import ./kitty.nix) { fontPkg = pkgs.fira-code; };
   tmuxConf = import ./tmux.nix;
   rofiConf = import ./rofi.nix { inherit pkgs; };
-in {
+  pubkey = builtins.readFile /home/m0ar/.ssh/id_rsa.pub;
+in rec {
   targets.genericLinux.enable = true;
   nixpkgs.config.allowUnfree = true;
   programs.home-manager.enable = true;
   home.stateVersion = "22.11";
   home.homeDirectory = "/home/m0ar";
   home.username = "m0ar";
+
+  # Link extra configuration files
+  home.file = {
+    sshAllowedSigners = {
+      target = ".ssh/allowed_signers";
+      text = programs.git.userEmail + " " + pubkey;
+    };
+  };
 
   xsession = xConfig {
     i3Config = i3Config {
@@ -43,7 +52,10 @@ in {
 
   programs.zsh = zshConf;
   programs.kitty = kittyConf;
-  programs.git = gitConf;
+  programs.git = gitConf {
+    inherit pubkey;
+    allowedSignersFile = home.file.sshAllowedSigners.target;
+  };
   programs.tmux = tmuxConf;
   programs.rofi = rofiConf;
   programs.direnv.enable = true;
