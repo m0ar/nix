@@ -1,4 +1,4 @@
-{ lib, pkgs }:
+{ lib, pkgs, config }:
 let
   firaCode = {
     names = [ "Fira Code" ];
@@ -136,17 +136,22 @@ in {
       }
     ];
     assigns = {
-      "1" = [{ class = "google-chrome"; }];
       "3" = [{ class = "Code"; }];
       "4" = [{ class = "firefox"; }];
       "6" = [{ class = "Slack"; }];
       "8" = [{ class = "obsidian"; }];
     };
     window = {
-      commands = [{
-        criteria = { class = "Spotify"; };
-        command = "move container to workspace 9";
-      }];
+      commands = [
+        {
+          criteria = { class = "Spotify"; };
+          command = "move container to workspace 9";
+        }
+        {
+          criteria = { class = "google-chrome"; };
+          command = "move container to workspace 1";
+        }
+      ];
       border = 3;
       hideEdgeBorders = "smart";
       titlebar = false;
@@ -167,7 +172,6 @@ in {
         { class = "qt5ct"; }
         { class = "(?i)System-config-printer.py"; }
         { class = "Blueman-manager"; }
-        { class = "Ulauncher"; }
       ];
     };
     keybindings = lib.mkOptionDefault {
@@ -185,7 +189,8 @@ in {
       "--release ${modifier}+Shift+Print" = "exec --no-startup-id i3-scrot -s";
       "--release ${modifier}+Shift+Return" =
         "exec --no-startup-id /home/m0ar/scripts/lock.sh";
-      "${modifier}+Escape" = "exec rofi";
+      "--release ${modifier}+space" =
+        "exec --no-startup-id ${config.programs.rofi.finalPackage}/bin/rofi -show drun";
     };
     startup = builtins.map (as: as // { notification = false; }) [
       { command = "nm-applet"; }

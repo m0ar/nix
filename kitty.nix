@@ -11,6 +11,7 @@
     scrollback_lines = 20000;
     # confirm if more than one kitty window is open
     confirm_os_window_close = 2;
+    enable_audio_bell = false;
   };
   theme = "Afterglow";
 }

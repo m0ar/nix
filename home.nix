@@ -25,10 +25,7 @@ in rec {
   };
 
   xsession = xConfig {
-    i3Config = i3Config {
-      inherit lib;
-      inherit pkgs;
-    };
+    i3Config = i3Config { inherit lib pkgs config; };
     inherit pkgs;
   };
 

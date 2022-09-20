@@ -1,5 +1,4 @@
-{ pubkey, allowedSignersFile }:
-{
+{ pubkey, allowedSignersFile }: {
   enable = true;
   userName = "m0ar";
   userEmail = "edvard@hubinette.me";
@@ -32,9 +31,7 @@
     tag = { gpgSign = true; };
     gpg = {
       format = "ssh";
-      ssh = {
-        allowedSignersFile = "~/" + allowedSignersFile;
-      };
+      ssh = { allowedSignersFile = "~/" + allowedSignersFile; };
     };
     user = { signingKey = pubkey; };
   };
