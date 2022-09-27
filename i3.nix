@@ -136,6 +136,7 @@ in {
       }
     ];
     assigns = {
+      "1" = [{ class = "google-chrome"; }];
       "3" = [{ class = "Code"; }];
       "4" = [{ class = "firefox"; }];
       "6" = [{ class = "Slack"; }];
@@ -174,45 +175,54 @@ in {
         { class = "Blueman-manager"; }
       ];
     };
-    keybindings = lib.mkOptionDefault {
-      "${modifier}+Return" =
-        "exec ${pkgs.nixgl.nixGLIntel}/bin/nixGLIntel ${pkgs.kitty}/bin/kitty";
-      "${modifier}+Shift+q" = "kill";
-      "${modifier}+d" = "exec --no-startup-id dmenu_recency";
-      "${modifier}+z" = "exec --no-startup-id morc-menu";
-      "${modifier}+Ctrl+m" = "exec pavucontrol";
-      "XF86AudioPlay" = "exec --no-startup-id 'playerctl play-pause'";
-      "XF86AudioNext" = "exec --no-startup-id 'playerctl next'";
-      "XF86AudioPrev" = "exec --no-startup-id 'playerctl previous'";
-      "Print" = "exec --no-startup-id i3-scrot";
-      "${modifier}+Print" = "exec --no-startup-id i3-scrot -w";
-      "--release ${modifier}+Shift+Print" = "exec --no-startup-id i3-scrot -s";
-      "--release ${modifier}+Shift+Return" =
-        "exec --no-startup-id /home/m0ar/scripts/lock.sh";
-      "--release ${modifier}+space" =
-        "exec --no-startup-id ${config.programs.rofi.finalPackage}/bin/rofi -show drun";
-    };
-    startup = builtins.map (as: as // { notification = false; }) [
-      { command = "nm-applet"; }
-      { command = "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1"; }
-      { command = "xsetroot -solid '#000000'"; }
-      { command = "xfce4-power-manager"; }
-      { command = "blueman-applet"; }
-      {
-        command = "fix_xcursor";
-        always = true;
-      }
-      { command = "xmodmap ~/.Xmodmap"; }
-      { command = "slack"; }
-      { command = "firefox"; }
-      { command = "google-chrome-stable"; }
-      { command = "obsidian"; }
-      { command = "spotify"; }
-      { command = "/home/m0ar/scripts/workspace-2.sh"; }
-      { command = "systemctl --user start i3-session.target"; }
-      { command = "pa-applet"; }
-      { command = "playerctld daemon"; }
-    ];
+    keybindings = with pkgs;
+      lib.mkOptionDefault {
+        "${modifier}+Return" =
+          "exec ${nixgl.nixGLIntel}/bin/nixGLIntel ${kitty}/bin/kitty";
+        "${modifier}+Shift+q" = "kill";
+        "${modifier}+d" = "exec --no-startup-id dmenu_recency";
+        "${modifier}+z" = "exec --no-startup-id morc-menu";
+        "${modifier}+Ctrl+m" = "exec pavucontrol";
+        "XF86AudioPlay" = "exec --no-startup-id 'playerctl play-pause'";
+        "XF86AudioNext" = "exec --no-startup-id 'playerctl next'";
+        "XF86AudioPrev" = "exec --no-startup-id 'playerctl previous'";
+        "Print" = "exec --no-startup-id i3-scrot";
+        "${modifier}+Print" = "exec --no-startup-id i3-scrot -w";
+        "--release ${modifier}+Shift+Print" =
+          "exec --no-startup-id i3-scrot -s";
+        "--release ${modifier}+Shift+Return" =
+          "exec --no-startup-id /home/m0ar/scripts/lock.sh";
+        "--release ${modifier}+space" =
+          "exec --no-startup-id ${config.programs.rofi.finalPackage}/bin/rofi -show drun";
+        "${modifier}+Ctrl+w" =
+          "exec --no-startup-id ${imagemagick}/bin/display -window root $(find ${
+            ./wallpapers
+          } -type f | ${coreutils}/bin/shuf) -n 1)";
+      };
+    startup = with pkgs;
+      builtins.map (as: as // { notification = false; }) [
+        { command = "nm-applet"; }
+        {
+          command = "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1";
+        }
+        { command = "xsetroot -solid '#000000'"; }
+        { command = "xfce4-power-manager"; }
+        { command = "blueman-applet"; }
+        {
+          command = "fix_xcursor";
+          always = true;
+        }
+        { command = "xmodmap ~/.Xmodmap"; }
+        { command = "slack"; }
+        { command = "firefox"; }
+        { command = "google-chrome-stable"; }
+        { command = "obsidian"; }
+        { command = "spotify"; }
+        { command = "/home/m0ar/scripts/workspace-2.sh"; }
+        { command = "systemctl --user start i3-session.target"; }
+        { command = "pa-applet"; }
+        { command = "playerctld daemon"; }
+      ];
     gaps = {
       smartBorders = "on";
       smartGaps = true;

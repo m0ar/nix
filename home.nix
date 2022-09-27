@@ -7,6 +7,7 @@ let
   kittyConf = (import ./kitty.nix) { fontPkg = pkgs.fira-code; };
   tmuxConf = import ./tmux.nix;
   rofiConf = import ./rofi.nix { inherit pkgs; };
+  kakouneConf = import ./kakoune/default.nix { inherit pkgs; };
   pubkey = builtins.readFile /home/m0ar/.ssh/id_rsa.pub;
 in rec {
   targets.genericLinux.enable = true;
@@ -44,15 +45,23 @@ in rec {
       terraform
       ripgrep
       ncdu
+      imagemagick
+      audacity-gtk3
       (nerdfonts.override { fonts = [ "NerdFontsSymbolsOnly" ]; })
     ];
 
+  programs.keychain = {
+    enable = true;
+    enableZshIntegration = true;
+    enableBashIntegration = true;
+  };
   programs.zsh = zshConf;
   programs.kitty = kittyConf;
   programs.git = gitConf {
     inherit pubkey;
     allowedSignersFile = home.file.sshAllowedSigners.target;
   };
+  programs.kakoune = kakouneConf;
   programs.tmux = tmuxConf;
   programs.rofi = rofiConf;
   programs.direnv.enable = true;
