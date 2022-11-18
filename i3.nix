@@ -91,8 +91,8 @@ let
     "9" = "9";
   };
   outputs = {
-    m1 = "DP-3-8";
-    m2 = "DP-3-1";
+    m1 = "DP-1-3";
+    m2 = "DP-1-2";
   };
 in {
   enable = true;

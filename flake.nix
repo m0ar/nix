@@ -9,9 +9,13 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixgl.url = "github:guibou/nixGL";
+    zshPure = {
+      url = "github:sindresorhus/pure";
+      flake = false;
+    };
   };
 
-  outputs = { self, home-manager, nixgl, nixpkgs, utils }:
+  outputs = { self, home-manager, nixgl, nixpkgs, utils, zshPure }:
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs {
@@ -22,6 +26,7 @@
       homeConfigurations.laptop = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
         modules = [ ./home.nix ];
+        extraSpecialArgs = { inherit zshPure; };
       };
 
       # Workaround from https://github.com/nix-community/home-manager/issues/2848#issuecomment-1196005666

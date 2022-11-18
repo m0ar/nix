@@ -1,13 +1,13 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, zshPure, ... }:
 let
   xConfig = import ./xsession.nix;
   i3Config = import ./i3.nix;
-  zshConf = import ./zsh.nix;
+  zshConf = import ./zsh.nix { inherit zshPure; };
   gitConf = import ./git.nix;
   kittyConf = (import ./kitty.nix) { fontPkg = pkgs.fira-code; };
   tmuxConf = import ./tmux.nix;
   rofiConf = import ./rofi.nix { inherit pkgs; };
-  kakouneConf = import ./kakoune/default.nix { inherit pkgs; };
+  kakouneConf = import ./kakoune { inherit pkgs; };
   pubkey = builtins.readFile /home/m0ar/.ssh/id_rsa.pub;
 in rec {
   targets.genericLinux.enable = true;
@@ -30,6 +30,12 @@ in rec {
     inherit pkgs;
   };
 
+  xdg = {
+    enable = true;
+    # Add additional XDG config files here
+    configFile = kakouneConf.xdgConfigs // {};
+  };
+
   # Enable fc-cache to find nix fonts
   fonts.fontconfig.enable = true;
   home.packages = with pkgs;
@@ -39,14 +45,19 @@ in rec {
 
       # nixpkgs
       nix-tree
+      nix-du
       nixfmt
+      nix-diff
       bpytop
       google-cloud-sdk
       terraform
       ripgrep
       ncdu
+      glow
       imagemagick
-      audacity-gtk3
+      audacity
+      (pass.withExtensions (ext: with ext; [ pass-import pass-genphrase ]))
+      qtpass
       (nerdfonts.override { fonts = [ "NerdFontsSymbolsOnly" ]; })
     ];
 
@@ -61,7 +72,7 @@ in rec {
     inherit pubkey;
     allowedSignersFile = home.file.sshAllowedSigners.target;
   };
-  programs.kakoune = kakouneConf;
+  programs.kakoune = builtins.removeAttrs kakouneConf [ "xdgConfigs" ];
   programs.tmux = tmuxConf;
   programs.rofi = rofiConf;
   programs.direnv.enable = true;

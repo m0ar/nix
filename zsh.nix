@@ -1,3 +1,4 @@
+{ zshPure }:
 {
   enable = true;
   enableSyntaxHighlighting = true;
@@ -45,11 +46,9 @@
     if [ -e /home/m0ar/.nix-profile/etc/profile.d/nix.sh ]; then
       . /home/m0ar/.nix-profile/etc/profile.d/nix.sh
     fi
-  '';
 
-  oh-my-zsh = {
-    enable = true;
-    theme = "amuse";
-    plugins = [ ];
-  };
+    fpath+=(${zshPure})
+    autoload -U promptinit; promptinit
+    prompt pure
+  '';
 }

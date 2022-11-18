@@ -3,9 +3,6 @@
   plugins = [
     kak-lsp
     kak-fzf
-    kak-auto-pairs
-    # kak-prelude
-    # connect-kak
   ];
   config = {
     autoReload = "yes";
@@ -14,6 +11,10 @@
     showMatching = true;
     indentWidth = 2;
     tabStop = 2;
+    ui = {
+      assistant = "clippy";
+      enableMouse = true;
+    };
     numberLines = {
       enable = true;
       highlightCursor = true;
@@ -69,6 +70,11 @@
     hooks = [];
   };
   extraConfig = ''
+  	hook global ModuleLoaded fzf-grep %{
+    	set-option global fzf_grep_command 'rg'
+  	}
+    add-highlighter /global regex ^[^\n]{80}([^\n]) 1:+r
+
     hook global BufCreate /.* %{
       # Autosave
       hook buffer NormalIdle .* %{
@@ -128,4 +134,7 @@
     }
   '';
 
+  xdgConfigs = {
+    "kak-lsp/kak-lsp.toml".text = (import ./kak-lsp-toml.nix pkgs);
+  };
 }
