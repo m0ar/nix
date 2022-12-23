@@ -95,144 +95,146 @@ let
     m2 = "DP-1-2";
   };
 in {
-  enable = true;
-  config = rec {
-    workspaceOutputAssign = [
-      {
-        workspace = ws."1";
-        output = outputs.m2;
-      }
-      {
-        workspace = ws."2";
-        output = outputs.m2;
-      }
-      {
-        workspace = ws."3";
-        output = outputs.m2;
-      }
-      {
-        workspace = ws."4";
-        output = outputs.m2;
-      }
-      {
-        workspace = ws."5";
-        output = outputs.m2;
-      }
-      {
-        workspace = ws."6";
-        output = outputs.m1;
-      }
-      {
-        workspace = ws."7";
-        output = outputs.m1;
-      }
-      {
-        workspace = ws."8";
-        output = outputs.m1;
-      }
-      {
-        workspace = ws."9";
-        output = outputs.m1;
-      }
-    ];
-    assigns = {
-      "1" = [{ class = "google-chrome"; }];
-      "3" = [{ class = "Code"; }];
-      "4" = [{ class = "firefox"; }];
-      "6" = [{ class = "Slack"; }];
-      "8" = [{ class = "obsidian"; }];
-    };
-    window = {
-      commands = [
+  conf = {
+    enable = true;
+    config = rec {
+      workspaceOutputAssign = [
         {
-          criteria = { class = "Spotify"; };
-          command = "move container to workspace 9";
+          workspace = ws."1";
+          output = outputs.m2;
         }
         {
-          criteria = { class = "google-chrome"; };
-          command = "move container to workspace 1";
+          workspace = ws."2";
+          output = outputs.m2;
+        }
+        {
+          workspace = ws."3";
+          output = outputs.m2;
+        }
+        {
+          workspace = ws."4";
+          output = outputs.m2;
+        }
+        {
+          workspace = ws."5";
+          output = outputs.m2;
+        }
+        {
+          workspace = ws."6";
+          output = outputs.m1;
+        }
+        {
+          workspace = ws."7";
+          output = outputs.m1;
+        }
+        {
+          workspace = ws."8";
+          output = outputs.m1;
+        }
+        {
+          workspace = ws."9";
+          output = outputs.m1;
         }
       ];
-      border = 3;
-      hideEdgeBorders = "smart";
-      titlebar = false;
-    };
-    modifier = "Mod4";
-    bars = [ topBar ];
-    colors = colorConfig;
-    focus = { followMouse = true; };
-    fonts = firaCode;
-    floating = {
-      criteria = [
-        { title = "alsamixer"; }
-        { title = "i3_help"; }
-        { class = "Lxappearance"; }
-        { class = "Manjaro Settings Manager"; }
-        { class = "Pamac-manager"; }
-        { class = "Pavucontrol"; }
-        { class = "qt5ct"; }
-        { class = "(?i)System-config-printer.py"; }
-        { class = "Blueman-manager"; }
-      ];
-    };
-    keybindings = with pkgs;
-      lib.mkOptionDefault {
-        "${modifier}+Return" =
-          "exec ${nixgl.nixGLIntel}/bin/nixGLIntel ${kitty}/bin/kitty";
-        "${modifier}+Shift+q" = "kill";
-        "${modifier}+d" = "exec --no-startup-id dmenu_recency";
-        "${modifier}+z" = "exec --no-startup-id morc-menu";
-        "${modifier}+Ctrl+m" = "exec pavucontrol";
-        "XF86AudioPlay" = "exec --no-startup-id 'playerctl play-pause'";
-        "XF86AudioNext" = "exec --no-startup-id 'playerctl next'";
-        "XF86AudioPrev" = "exec --no-startup-id 'playerctl previous'";
-        "Print" = "exec --no-startup-id i3-scrot";
-        "${modifier}+Print" = "exec --no-startup-id i3-scrot -w";
-        "--release ${modifier}+Shift+Print" =
-          "exec --no-startup-id i3-scrot -s";
-        "--release ${modifier}+Shift+Return" =
-          "exec --no-startup-id /home/m0ar/scripts/lock.sh";
-        "--release ${modifier}+space" =
-          "exec --no-startup-id ${config.programs.rofi.finalPackage}/bin/rofi -show drun";
-        "${modifier}+Ctrl+w" =
-          "exec --no-startup-id ${imagemagick}/bin/display -window root $(find ${
-            ./wallpapers
-          } -type f | ${coreutils}/bin/shuf) -n 1)";
+      assigns = {
+        "1" = [{ class = "google-chrome"; }];
+        "3" = [{ class = "Code"; }];
+        "4" = [{ class = "firefox"; }];
+        "6" = [{ class = "Slack"; }];
+        "8" = [{ class = "obsidian"; }];
       };
-    startup = with pkgs;
-      builtins.map (as: as // { notification = false; }) [
-        { command = "nm-applet"; }
-        {
-          command = "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1";
-        }
-        { command = "xsetroot -solid '#000000'"; }
-        { command = "xfce4-power-manager"; }
-        { command = "blueman-applet"; }
-        {
-          command = "fix_xcursor";
-          always = true;
-        }
-        { command = "xmodmap ~/.Xmodmap"; }
-        { command = "slack"; }
-        { command = "firefox"; }
-        { command = "google-chrome-stable"; }
-        { command = "obsidian"; }
-        { command = "spotify"; }
-        { command = "/home/m0ar/scripts/workspace-2.sh"; }
-        { command = "systemctl --user start i3-session.target"; }
-        { command = "pa-applet"; }
-        { command = "playerctld daemon"; }
-      ];
-    gaps = {
-      smartBorders = "on";
-      smartGaps = true;
-      inner = 0;
-      outer = 0;
+      window = {
+        commands = [
+          {
+            criteria = { class = "Spotify"; };
+            command = "move container to workspace 9";
+          }
+          {
+            criteria = { class = "google-chrome"; };
+            command = "move container to workspace 1";
+          }
+        ];
+        border = 3;
+        hideEdgeBorders = "smart";
+        titlebar = false;
+      };
+      modifier = "Mod4";
+      bars = [ topBar ];
+      colors = colorConfig;
+      focus = { followMouse = true; };
+      fonts = firaCode;
+      floating = {
+        criteria = [
+          { title = "alsamixer"; }
+          { title = "i3_help"; }
+          { class = "Lxappearance"; }
+          { class = "Manjaro Settings Manager"; }
+          { class = "Pamac-manager"; }
+          { class = "Pavucontrol"; }
+          { class = "qt5ct"; }
+          { class = "(?i)System-config-printer.py"; }
+          { class = "Blueman-manager"; }
+        ];
+      };
+      keybindings = with pkgs;
+        lib.mkOptionDefault {
+          "${modifier}+Return" =
+            "exec ${nixgl.nixGLIntel}/bin/nixGLIntel ${kitty}/bin/kitty";
+          "${modifier}+Shift+q" = "kill";
+          "${modifier}+d" = "exec --no-startup-id dmenu_recency";
+          "${modifier}+z" = "exec --no-startup-id morc-menu";
+          "${modifier}+Ctrl+m" = "exec pavucontrol";
+          "XF86AudioPlay" = "exec --no-startup-id 'playerctl play-pause'";
+          "XF86AudioNext" = "exec --no-startup-id 'playerctl next'";
+          "XF86AudioPrev" = "exec --no-startup-id 'playerctl previous'";
+          "Print" = "exec --no-startup-id i3-scrot";
+          "${modifier}+Print" = "exec --no-startup-id i3-scrot -w";
+          "--release ${modifier}+Shift+Print" =
+            "exec --no-startup-id i3-scrot -s";
+          "--release ${modifier}+Shift+Return" =
+            "exec --no-startup-id /home/m0ar/scripts/lock.sh";
+          "--release ${modifier}+space" =
+            "exec --no-startup-id ${config.programs.rofi.finalPackage}/bin/rofi -show drun";
+          "${modifier}+Ctrl+w" =
+            "exec --no-startup-id ${imagemagick}/bin/display -window root $(find ${
+              ./wallpapers
+            } -type f | ${coreutils}/bin/shuf) -n 1)";
+        };
+      startup = with pkgs;
+        builtins.map (as: as // { notification = false; }) [
+          { command = "nm-applet"; }
+          {
+            command = "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1";
+          }
+          { command = "xsetroot -solid '#000000'"; }
+          { command = "xfce4-power-manager"; }
+          { command = "blueman-applet"; }
+          {
+            command = "fix_xcursor";
+            always = true;
+          }
+          { command = "xmodmap ~/.Xmodmap"; }
+          { command = "slack"; }
+          { command = "firefox"; }
+          { command = "google-chrome-stable"; }
+          { command = "obsidian"; }
+          { command = "spotify"; }
+          { command = "/home/m0ar/scripts/workspace-2.sh"; }
+          { command = "systemctl --user start i3-session.target"; }
+          { command = "pa-applet"; }
+          { command = "playerctld daemon"; }
+        ];
+      gaps = {
+        smartBorders = "on";
+        smartGaps = true;
+        inner = 0;
+        outer = 0;
+      };
     };
+    extraConfig = ''
+      default_border pixel 3
+      default_floating_border normal
+      hide_edge_borders none
+    '';
   };
-  extraConfig = ''
-    default_border pixel 3
-    default_floating_border normal
-    hide_edge_borders none
-  '';
 }

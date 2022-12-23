@@ -1,6 +1,11 @@
-{ pkgs }: with pkgs.kakounePlugins; {
+{ pkgs }:
+let
+  inherit (pkgs) lib;
+  rcFiles = builtins.attrNames (builtins.readDir ./rc);
+  rcPaths = builtins.map (f: ./. + "/rc/${f}") rcFiles;
+in {
   enable = true;
-  plugins = [
+  plugins = with pkgs.kakounePlugins; [
     kak-lsp
     kak-fzf
   ];
@@ -67,71 +72,43 @@
       }
     ];
     # Global hooks
-    hooks = [];
+    #hooks = [];
   };
   extraConfig = ''
-  	hook global ModuleLoaded fzf-grep %{
-    	set-option global fzf_grep_command 'rg'
-  	}
-    add-highlighter /global regex ^[^\n]{80}([^\n]) 1:+r
+	hook global ModuleLoaded fzf-grep %{
+  	set-option global fzf_grep_command 'rg'
+	}
 
-    hook global BufCreate /.* %{
-      # Autosave
-      hook buffer NormalIdle .* %{
-        try %{
-          eval %sh{ [ "$kak_modified" = false ] && printf 'fail' }
-          write
-        }
-      }
-      add-highlighter buffer/trailing-ws regex '\h+$' 0:red
-    }
+  add-highlighter /global regex ^[^\n]{80}([^\n]) 1:+r
 
-    hook global InsertChar \t %{
-      exec -draft h@
-    }
-
-    # Switch cursor color in insert mode
-    set-face global InsertCursor default,red+B
-
-    hook global ModeChange .*:.*:insert %{
-        set-face window PrimaryCursor InsertCursor
-        set-face window PrimaryCursorEol InsertCursor
-    }
-
-    hook global ModeChange .*:insert:.* %{
+  hook global BufCreate /.* %{
+    # Autosave
+    hook buffer NormalIdle .* %{
       try %{
-        unset-face window PrimaryCursor
-        unset-face window PrimaryCursorEol
+        eval %sh{ [ "$kak_modified" = false ] && printf 'fail' }
+        write
       }
     }
-    ## Git diff stuff
-    # enable flag-lines hl for git diff
-    hook global WinCreate .* %{
-        add-highlighter window/git-diff flag-lines Default git_diff_flags
-    }
-    # trigger update diff if inside git dir
-    hook global BufOpenFile .* %{
-      evaluate-commands -draft %sh{
-        cd $(dirname "$kak_buffile")
-        if [ $(git rev-parse --git-dir 2>/dev/null) ]; then
-          for hook in WinCreate BufReload BufWritePost; do
-            printf "hook buffer -group git-update-diff %s .* 'git update-diff'\n" "$hook"
-          done
-        fi
-      }
-    }
+    add-highlighter buffer/trailing-ws regex '\h+$' 0:red
+  }
 
-    # LSPs
-    eval %sh{kak-lsp --kakoune -s $kak_session}
-    hook global WinSetOption filetype=(python|go|javascript|typescript|sh|elm|yaml|kak|elixir|nix|terraform) %{
-      lsp-enable-window
-      # lsp-inlay-diagnostics-enable window
-      map -docstring "Show hover info" global user h ': lsp-hover<ret>'
-    }
+  hook global InsertChar \t %{
+    exec -draft h@
+  }
 
-    hook global BufCreate .*/?PKGBUILD %{
-        set-option buffer filetype sh
-    }
+  # LSPs
+  eval %sh{kak-lsp --kakoune -s $kak_session}
+  hook global WinSetOption filetype=(python|go|javascript|typescript|sh|elm|yaml|kak|elixir|nix|terraform) %{
+    lsp-enable-window
+    # lsp-inlay-diagnostics-enable window
+    map -docstring "Show hover info" global user h ': lsp-hover<ret>'
+  }
+
+  hook global BufCreate .*/?PKGBUILD %{
+      set-option buffer filetype sh
+  }
+
+  ${lib.concatMapStringsSep "\n\n" builtins.readFile rcPaths}
   '';
 
   xdgConfigs = {

@@ -36,6 +36,12 @@
     bind-key -T copy-mode-vi 'V' send -X select-line
     bind-key -T copy-mode-vi 'y' send -X copy-pipe-and-cancel "xsel -ib"
     bind-key -T copy-mode-vi 'C-v' send -X rectangle-toggle
+
+    # New windows & splits use CWD as base
+    bind '"' split-window -c "#{pane_current_path}"
+    bind % split-window -h -c "#{pane_current_path}"
+    bind c new-window -c "#{pane_current_path}"
+    
     # Bind ']' to use pbpaste
     unbind ]
     bind ] run "xsel -ob | tmux load-buffer - ; tmux paste-buffer"

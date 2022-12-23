@@ -1,7 +1,7 @@
 { config, pkgs, lib, zshPure, ... }:
 let
-  xConfig = import ./xsession.nix;
-  i3Config = import ./i3.nix;
+  i3 = import ./i3.nix { inherit lib pkgs config; };
+  x = import ./x.nix { inherit pkgs i3; };
   zshConf = import ./zsh.nix { inherit zshPure; };
   gitConf = import ./git.nix;
   kittyConf = (import ./kitty.nix) { fontPkg = pkgs.fira-code; };
@@ -23,12 +23,10 @@ in rec {
       target = ".ssh/allowed_signers";
       text = programs.git.userEmail + " " + pubkey;
     };
-  };
+  } // x.configFiles;
 
-  xsession = xConfig {
-    i3Config = i3Config { inherit lib pkgs config; };
-    inherit pkgs;
-  };
+  xsession = x.session;
+  #xresources = x.resources;
 
   xdg = {
     enable = true;
@@ -61,6 +59,10 @@ in rec {
       (nerdfonts.override { fonts = [ "NerdFontsSymbolsOnly" ]; })
     ];
 
+  # services = {
+  #   dunst = { enable = true; };
+  # };
+
   programs.keychain = {
     enable = true;
     enableZshIntegration = true;
@@ -75,7 +77,16 @@ in rec {
   programs.kakoune = builtins.removeAttrs kakouneConf [ "xdgConfigs" ];
   programs.tmux = tmuxConf;
   programs.rofi = rofiConf;
-  programs.direnv.enable = true;
   programs.jq.enable = true;
   programs.fzf.enable = true;
+  programs.direnv = {
+    enable = true;
+    enableZshIntegration = true;
+    enableBashIntegration = true;
+    config = {
+      "whitelist" = {
+        "prefix" = [ "~/dev/nortical/evl" ];
+      };
+    };
+  };
 }

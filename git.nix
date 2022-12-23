@@ -5,8 +5,10 @@
   aliases = {
     a = "add";
     c = "commit";
+    d = "diff";
     co = "checkout";
     f = "fetch";
+    fap = "fetch --all --prune";
     lol = "log --graph --decorate --pretty=oneline --abbrev-commit";
     lola = "log --graph --decorate --pretty=oneline --abbrev-commit --all";
     st = "status";

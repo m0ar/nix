@@ -4,6 +4,7 @@
   enableSyntaxHighlighting = true;
   enableAutosuggestions = true;
   enableVteIntegration = true;
+  autocd = true;
   shellAliases = {
     evl = "EVL_HOME=$(git root) nix run evl#evl --";
     cp = "cp -i";
@@ -13,6 +14,11 @@
   };
   envExtra = ''
     export EDITOR=kak
+  '';
+  profileExtra = ''
+    if [ -z "''${DISPLAY}" ] && [ "''${XDG_VTNR}" -eq 1 ]; then
+      exec startx
+    fi
   '';
   initExtra = ''
     setopt extendedglob
@@ -50,5 +56,7 @@
     fpath+=(${zshPure})
     autoload -U promptinit; promptinit
     prompt pure
+
+    [ "$TERM" = "xterm-kitty" ] && alias ssh="kitty +kitten ssh"
   '';
 }
