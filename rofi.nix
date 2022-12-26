@@ -13,8 +13,8 @@
     stores = [];
   };
   extraConfig = {
-    modi = "drun,combi";
-    combi-modi = "systemd,calc,emoji";
+    modi = "drun,calc,combi";
+    combi-modi = "systemd,emoji";
   };
   theme = "Monokai";
 }
