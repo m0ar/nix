@@ -1,4 +1,7 @@
-{ lib, pkgs, config }:
+{ pkgs
+, config
+, ...
+}:
 let
   firaCode = {
     names = [ "Fira Code" ];
@@ -195,10 +198,6 @@ in {
             "exec --no-startup-id /home/m0ar/scripts/lock.sh";
           "--release ${modifier}+space" =
             "exec --no-startup-id ${config.programs.rofi.finalPackage}/bin/rofi -show drun";
-          "${modifier}+Ctrl+w" =
-            "exec --no-startup-id ${imagemagick}/bin/display -window root $(find ${
-              ./wallpapers
-            } -type f | ${coreutils}/bin/shuf) -n 1)";
         };
       startup = with pkgs;
         builtins.map (as: as // { notification = false; }) [
@@ -213,13 +212,11 @@ in {
             command = "fix_xcursor";
             always = true;
           }
-          { command = "xmodmap ~/.Xmodmap"; }
           { command = "slack"; }
           { command = "firefox"; }
           { command = "google-chrome-stable"; }
           { command = "obsidian"; }
           { command = "spotify"; }
-          { command = "/home/m0ar/scripts/workspace-2.sh"; }
           { command = "systemctl --user start i3-session.target"; }
           { command = "pa-applet"; }
           { command = "playerctld daemon"; }
@@ -232,7 +229,7 @@ in {
       };
     };
     extraConfig = ''
-      default_border pixel 3
+      default_border pixel 2
       default_floating_border normal
       hide_edge_borders none
     '';

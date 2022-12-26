@@ -1,4 +1,4 @@
-{ pkgs }:
+{ pkgs, ... }:
 let
   inherit (pkgs) lib;
   rcFiles = builtins.attrNames (builtins.readDir ./rc);

@@ -15,7 +15,7 @@
     };
   };
 
-  outputs = { self, home-manager, nixgl, nixpkgs, utils, zshPure }:
+  outputs = { self, home-manager, nixgl, nixpkgs, utils, zshPure }@flakeInputs:
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs {
@@ -26,7 +26,7 @@
       homeConfigurations.m0ar = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
         modules = [ ./home.nix ];
-        extraSpecialArgs = { inherit zshPure; };
+        extraSpecialArgs = { inputs = flakeInputs; };
       };
     };
 }

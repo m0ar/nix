@@ -1,0 +1,11 @@
+! set capslock to escape key
+!clear Lock
+!keycode 66 = Escape NoSymbol Escape
+
+keycode 66 = Mode_switch NoSymbol Mode_switch
+clear mod5
+add mod5 = ISO_Level3_Shift
+keycode  30 = u U udiaeresis Udiaeresis
+keycode  34 = bracketleft braceleft aring Aring 
+keycode  47 = semicolon colon adiaeresis Adiaeresis
+keycode  48 = apostrophe quotedbl odiaeresis Odiaeresis

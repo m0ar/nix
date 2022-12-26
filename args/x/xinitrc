@@ -1,0 +1,3 @@
+# home-manager creates .xsession starting the VM and other things,
+# so starting it here creates competing processes
+source $HOME/.xsession

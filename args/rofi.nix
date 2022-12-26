@@ -1,4 +1,4 @@
-{ pkgs }: {
+{ pkgs, ... }: {
   enable = true;
   terminal = "${pkgs.kitty}/bin/kitty";
   plugins = with pkgs; [

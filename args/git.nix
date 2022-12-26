@@ -1,4 +1,7 @@
-{ pubkey, allowedSignersFile }: {
+{ pubkey, ...}:
+# Injected from home.nix
+{ allowedSignersFile }:
+{
   enable = true;
   userName = "m0ar";
   userEmail = "edvard@hubinette.me";
