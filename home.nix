@@ -65,8 +65,6 @@ in rec {
 
   programs.keychain = {
     enable = true;
-    enableZshIntegration = true;
-    enableBashIntegration = true;
   };
   programs.zsh = zshConf;
   programs.kitty = kittyConf;
