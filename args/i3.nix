@@ -140,7 +140,7 @@ in {
         }
       ];
       assigns = {
-        "1" = [{ class = "google-chrome"; }];
+        "1" = [{ class = "Google-chrome"; }];
         "3" = [{ class = "Code"; }];
         "4" = [{ class = "firefox"; }];
         "6" = [{ class = "Slack"; }];
@@ -151,10 +151,6 @@ in {
           {
             criteria = { class = "Spotify"; };
             command = "move container to workspace 9";
-          }
-          {
-            criteria = { class = "google-chrome"; };
-            command = "move container to workspace 1";
           }
         ];
         border = 3;
@@ -177,6 +173,7 @@ in {
           { class = "qt5ct"; }
           { class = "(?i)System-config-printer.py"; }
           { class = "Blueman-manager"; }
+          { class = "flameshot"; }
         ];
       };
       keybindings = with pkgs;
@@ -184,16 +181,11 @@ in {
           "${modifier}+Return" =
             "exec ${nixgl.nixGLIntel}/bin/nixGLIntel ${kitty}/bin/kitty";
           "${modifier}+Shift+q" = "kill";
-          "${modifier}+d" = "exec --no-startup-id dmenu_recency";
-          "${modifier}+z" = "exec --no-startup-id morc-menu";
           "${modifier}+Ctrl+m" = "exec pavucontrol";
           "XF86AudioPlay" = "exec --no-startup-id 'playerctl play-pause'";
           "XF86AudioNext" = "exec --no-startup-id 'playerctl next'";
           "XF86AudioPrev" = "exec --no-startup-id 'playerctl previous'";
-          "Print" = "exec --no-startup-id i3-scrot";
-          "${modifier}+Print" = "exec --no-startup-id i3-scrot -w";
-          "--release ${modifier}+Shift+Print" =
-            "exec --no-startup-id i3-scrot -s";
+          "Print" = "exec ${nixgl.nixGLIntel}/bin/nixGLIntel flameshot gui";
           "--release ${modifier}+Shift+Return" =
             "exec --no-startup-id /home/m0ar/scripts/lock.sh";
           "--release ${modifier}+space" =
@@ -201,25 +193,19 @@ in {
         };
       startup = with pkgs;
         builtins.map (as: as // { notification = false; }) [
-          { command = "nm-applet"; }
           {
             command = "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1";
           }
-          { command = "xsetroot -solid '#000000'"; }
           { command = "xfce4-power-manager"; }
-          { command = "blueman-applet"; }
-          {
-            command = "fix_xcursor";
-            always = true;
-          }
+          # {
+          #   command = "fix_xcursor";
+          #   always = true;
+          # }
           { command = "slack"; }
           { command = "firefox"; }
           { command = "google-chrome-stable"; }
           { command = "obsidian"; }
           { command = "spotify"; }
-          { command = "systemctl --user start i3-session.target"; }
-          { command = "pa-applet"; }
-          { command = "playerctld daemon"; }
         ];
       gaps = {
         smartBorders = "on";

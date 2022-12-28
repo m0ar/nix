@@ -52,30 +52,36 @@ in rec {
       glow
       imagemagick
       audacity
+      playerctl
       (pass.withExtensions (ext: with ext; [ pass-import pass-genphrase ]))
       qtpass
       (nerdfonts.override { fonts = [ "NerdFontsSymbolsOnly" ]; })
     ];
 
-  programs.keychain = {
-    enable = true;
-  };
-  programs.zsh = zsh;
-  programs.kitty = kitty;
-  programs.git = git {
-    allowedSignersFile = home.file.sshAllowedSigners.target;
-  };
-  programs.kakoune = builtins.removeAttrs kakoune [ "xdgConfigs" ];
-  programs.tmux = tmux;
-  programs.rofi = rofi;
-  programs.jq.enable = true;
-  programs.fzf.enable = true;
-  programs.direnv = {
-    enable = true;
-    config = {
-      "whitelist" = {
-        "prefix" = [ "$HOME/dev/nortical/evl" ];
+  programs = {
+    inherit zsh kitty tmux rofi;
+    kakoune = kakoune.program;
+    keychain.enable = true;
+    git = git {
+      allowedSignersFile = home.file.sshAllowedSigners.target;
+    };
+    jq.enable = true;
+    fzf.enable = true;
+    direnv = {
+      enable = true;
+      config = {
+        "whitelist" = {
+          "prefix" = [ "$HOME/dev/nortical/evl" ];
+        };
       };
     };
+  };
+
+  services = {
+    playerctld.enable = true;
+    pasystray.enable = true;
+    blueman-applet.enable = true;
+    network-manager-applet.enable = true;
+    flameshot.enable = true;
   };
 }
