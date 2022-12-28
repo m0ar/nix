@@ -182,9 +182,9 @@ in {
             "exec ${nixgl.nixGLIntel}/bin/nixGLIntel ${kitty}/bin/kitty";
           "${modifier}+Shift+q" = "kill";
           "${modifier}+Ctrl+m" = "exec pavucontrol";
-          "XF86AudioPlay" = "exec --no-startup-id 'playerctl play-pause'";
-          "XF86AudioNext" = "exec --no-startup-id 'playerctl next'";
-          "XF86AudioPrev" = "exec --no-startup-id 'playerctl previous'";
+          "XF86AudioPlay" = "exec playerctl play-pause";
+          "XF86AudioNext" = "exec playerctl next";
+          "XF86AudioPrev" = "exec playerctl previous";
           "Print" = "exec ${nixgl.nixGLIntel}/bin/nixGLIntel flameshot gui";
           "--release ${modifier}+Shift+Return" =
             "exec --no-startup-id /home/m0ar/scripts/lock.sh";
