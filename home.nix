@@ -47,16 +47,18 @@ in rec {
       bpytop
       google-cloud-sdk
       terraform
+      cloudflared
       ripgrep
       ncdu
       glow
       imagemagick
       audacity
       playerctl
+      svtplay-dl
       (pass.withExtensions (ext: with ext; [ pass-import pass-genphrase ]))
       qtpass
       (nerdfonts.override { fonts = [ "NerdFontsSymbolsOnly" ]; })
-    ];
+    ] ++ builtins.attrValues scripts;
 
   programs = {
     inherit zsh kitty tmux rofi;

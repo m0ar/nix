@@ -18,5 +18,6 @@ let
     rofi = import ./rofi.nix args;
     kakoune = import ./kakoune args;
     pubkey = builtins.readFile /home/m0ar/.ssh/id_rsa.pub;
+    scripts = import ./scripts args;
   };
 in args

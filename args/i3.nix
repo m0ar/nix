@@ -1,8 +1,10 @@
 { pkgs
 , config
 , ...
-}:
+}@args:
 let
+  pavol = "${scripts.pavol}/bin/pavol";
+  pixlock = "${scripts.pixlock}/bin/pixlock";
   firaCode = {
     names = [ "Fira Code" ];
     style = "Regular";
@@ -182,14 +184,17 @@ in {
             "exec ${nixgl.nixGLIntel}/bin/nixGLIntel ${kitty}/bin/kitty";
           "${modifier}+Shift+q" = "kill";
           "${modifier}+Ctrl+m" = "exec pavucontrol";
+          "XF86AudioRaiseVolume" = "exec ${pavol} 5";
+          "XF86AudioLowerVolume" = "exec ${pavol} -5";
+          "XF86AudioMute" = "exec pactl set-sink-mute 0 toggle";
           "XF86AudioPlay" = "exec playerctl play-pause";
           "XF86AudioNext" = "exec playerctl next";
           "XF86AudioPrev" = "exec playerctl previous";
           "Print" = "exec ${nixgl.nixGLIntel}/bin/nixGLIntel flameshot gui";
           "--release ${modifier}+Shift+Return" =
-            "exec --no-startup-id /home/m0ar/scripts/lock.sh";
+            "exec ${pixlock} --no-unlock-indicator";
           "--release ${modifier}+space" =
-            "exec --no-startup-id ${config.programs.rofi.finalPackage}/bin/rofi -show drun";
+            "exec ${config.programs.rofi.finalPackage}/bin/rofi -show drun";
         };
       startup = with pkgs;
         builtins.map (as: as // { notification = false; }) [
@@ -197,15 +202,12 @@ in {
             command = "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1";
           }
           { command = "xfce4-power-manager"; }
-          # {
-          #   command = "fix_xcursor";
-          #   always = true;
-          # }
           { command = "slack"; }
           { command = "firefox"; }
           { command = "google-chrome-stable"; }
           { command = "obsidian"; }
           { command = "spotify"; }
+          { command = "${xss-lock}/bin/xss-lock --transfer-sleep-lock -- ${pixlock} --nofork --no-unlock-indicator"; }
         ];
       gaps = {
         smartBorders = "on";
