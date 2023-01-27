@@ -7,7 +7,8 @@
 }:
 let
   args = import ./args { inherit config pkgs lib inputs; };
-  inherit (args) pubkey x kakoune zsh kitty rofi git tmux scripts;
+  inherit (args) pubkey x kakoune zsh kitty rofi git tmux
+    scripts ssh;
 in rec {
   targets.genericLinux.enable = true;
   nixpkgs.config = {
@@ -61,7 +62,7 @@ in rec {
     ] ++ builtins.attrValues scripts;
 
   programs = {
-    inherit zsh kitty tmux rofi;
+    inherit zsh kitty tmux rofi ssh;
     kakoune = kakoune.program;
     keychain.enable = true;
     git = git {
