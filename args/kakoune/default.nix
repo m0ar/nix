@@ -12,7 +12,7 @@ in {
     ];
     config = {
       autoReload = "yes";
-      colorScheme = "pastel";
+      #colorScheme = "pastel";
       incrementalSearch = true;
       showMatching = true;
       indentWidth = 2;
@@ -27,7 +27,7 @@ in {
         relative = true;
       };
       scrollOff = {
-        columns = 5;
+        columns = 0;
         lines = 5;
       };
       keyMappings = [
@@ -54,7 +54,7 @@ in {
           docstring = "Cut";
           key = "d";
           mode = "user";
-          effect = "<a-|>xclip -i -selection clipboard<ret>";
+          effect = "<a-|>xclip -i -selection clipboard<ret>d";
         }{
           docstring = "Paste (before)";
           key = "p";
@@ -80,7 +80,8 @@ in {
     	set-option global fzf_grep_command 'rg'
   	}
 
-    add-highlighter /global regex ^[^\n]{80}([^\n]) 1:+r
+    add-highlighter global/trailing-ws regex ^[^\n]{80}([^\n]) 1:+r
+    add-highlighter global/ wrap -word -indent -width 100 -marker ^
 
     hook global BufCreate /.* %{
       # Autosave

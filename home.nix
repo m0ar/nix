@@ -8,7 +8,7 @@
 let
   args = import ./args { inherit config pkgs lib inputs; };
   inherit (args) pubkey x kakoune zsh kitty rofi git tmux
-    scripts ssh;
+    scripts dunst polybar ssh;
 in rec {
   targets.genericLinux.enable = true;
   nixpkgs.config = {
@@ -32,8 +32,8 @@ in rec {
 
   xdg = {
     enable = true;
-    # Add additional XDG config files here
-    configFile = kakoune.xdgConfigs // { };
+    configFile = kakoune.xdgConfigs
+      // dunst.configFiles;
   };
 
   # Enable fc-cache to find nix fonts
@@ -45,7 +45,7 @@ in rec {
       nix-du
       nixfmt
       nix-diff
-      bpytop
+      btop
       google-cloud-sdk
       terraform
       cloudflared
@@ -64,23 +64,24 @@ in rec {
   programs = {
     inherit zsh kitty tmux rofi ssh;
     kakoune = kakoune.program;
-    keychain.enable = true;
     git = git {
       allowedSignersFile = home.file.sshAllowedSigners.target;
     };
-    jq.enable = true;
-    fzf.enable = true;
     direnv = {
       enable = true;
       config = {
         "whitelist" = {
-          "prefix" = [ "$HOME/dev/nortical/evl" ];
+          "prefix" = [ "/home/m0ar/dev/nortical/evl" ];
         };
       };
     };
+    keychain.enable = true;
+    jq.enable = true;
+    fzf.enable = true;
   };
 
   services = {
+    inherit polybar;
     playerctld.enable = true;
     pasystray.enable = true;
     blueman-applet.enable = true;

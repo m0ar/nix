@@ -1,18 +1,19 @@
 { pkgs
 , config
+, scripts
 , ...
-}@args:
+}:
 let
   pavol = "${scripts.pavol}/bin/pavol";
   pixlock = "${scripts.pixlock}/bin/pixlock";
   firaCode = {
     names = [ "Fira Code" ];
     style = "Regular";
-    size = 11.0;
+    size = 6.0;
   };
   topBar = {
     command = "i3bar";
-    statusCommand = "i3status";
+    statusCommand = "${pkgs.i3status}/bin/i3status";
     position = "bottom";
     workspaceNumbers = null;
     fonts = firaCode;
@@ -142,9 +143,8 @@ in {
         }
       ];
       assigns = {
-        "1" = [{ class = "Google-chrome"; }];
+        "1" = [{ class = "Google-chrome"; } { class = "firefox"; } ];
         "3" = [{ class = "Code"; }];
-        "4" = [{ class = "firefox"; }];
         "6" = [{ class = "Slack"; }];
         "8" = [{ class = "obsidian"; }];
       };
@@ -160,7 +160,7 @@ in {
         titlebar = false;
       };
       modifier = "Mod4";
-      bars = [ topBar ];
+      bars = []; # Polybar as systemd user service
       colors = colorConfig;
       focus = { followMouse = true; };
       fonts = firaCode;
@@ -204,7 +204,7 @@ in {
           { command = "xfce4-power-manager"; }
           { command = "slack"; }
           { command = "firefox"; }
-          { command = "google-chrome-stable"; }
+          # { command = "google-chrome-stable"; }
           { command = "obsidian"; }
           { command = "spotify"; }
           { command = "${xss-lock}/bin/xss-lock --transfer-sleep-lock -- ${pixlock} --nofork --no-unlock-indicator"; }

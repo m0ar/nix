@@ -9,13 +9,13 @@
   matchBlocks = {
     "aur.archlinux.org" = {
       user = "aur";
-      identityFile = "aur";
+      identityFile = "~/.ssh/aur";
     };
 
     router = {
-      hostname = "192.168.99.1";
+      hostname = "192.168.1.1";
       user = "root";
-      identityFile = "id_rsa";
+      identityFile = "~/.ssh/id_rsa";
       extraOptions = {
         "HostKeyAlgorithms" = "+ssh-rsa";
         "PubkeyAcceptedAlgorithms" = "+ssh-rsa";
@@ -25,7 +25,7 @@
     mediacenter = {
       hostname = "192.168.99.99";
       user = "pi";
-      identityFile = "id_rsa";
+      identityFile = "~/.ssh/id_rsa";
     };
   }; 
   extraConfig = ''

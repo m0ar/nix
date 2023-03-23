@@ -17,6 +17,8 @@ let
     tmux = import ./tmux args;
     rofi = import ./rofi.nix args;
     kakoune = import ./kakoune args;
+    dunst = import ./dunst args;
+    polybar = import ./polybar args;
     pubkey = builtins.readFile /home/m0ar/.ssh/id_rsa.pub;
     scripts = import ./scripts args;
     ssh = import ./ssh args;

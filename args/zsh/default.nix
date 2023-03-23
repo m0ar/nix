@@ -7,6 +7,8 @@
   enableAutosuggestions = true;
   enableVteIntegration = true;
   autocd = true;
+  # Group-writable store trips compinit security checks
+  completionInit = "autoload -U compinit && compinit -u";
   shellAliases = {
     evl = "EVL_HOME=$(git root) nix run evl#evl --";
     cp = "cp -i";
@@ -20,5 +22,10 @@
     fpath+=(${zshPure})
     autoload -U promptinit; promptinit
     prompt pure
+
+    # Append nortical config
+    if [[ -e ~/.zshrc_nortical ]]; then
+      source ~/.zshrc_nortical
+    fi
   '';
 }
