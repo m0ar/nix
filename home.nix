@@ -40,25 +40,42 @@ in rec {
   fonts.fontconfig.enable = true;
   home.packages = with pkgs;
     [
-      # nixpkgs
+      # meta
       nix-tree
       nix-du
       nixfmt
       nix-diff
+
+      # util
       btop
-      google-cloud-sdk
-      terraform
-      cloudflared
       ripgrep
+      unzip
       ncdu
       glow
       imagemagick
-      audacity
-      playerctl
-      svtplay-dl
       (pass.withExtensions (ext: with ext; [ pass-import pass-genphrase ]))
       qtpass
+      playerctl
+
+      # programming
+      terraform
+      cloudflared
+
+      # media
+      audacity
+      svtplay-dl
+
+      # social
+      obsidian
+      slack
+      discord
+      tdesktop # telegram
+
+      # fonts
+      fontconfig
       (nerdfonts.override { fonts = [ "NerdFontsSymbolsOnly" ]; })
+      fira-code
+      font-awesome_4
     ] ++ builtins.attrValues scripts;
 
   programs = {
@@ -84,7 +101,7 @@ in rec {
     inherit polybar;
     playerctld.enable = true;
     pasystray.enable = true;
-    blueman-applet.enable = true;
+    # blueman-applet.enable = true;
     network-manager-applet.enable = true;
     flameshot.enable = true;
   };

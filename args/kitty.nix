@@ -4,7 +4,7 @@
   font = {
     package = pkgs.fira-code;
     name = "FiraCode";
-    size = 13;
+    size = 12;
   };
   settings = {
     cursor_shape = "block";
