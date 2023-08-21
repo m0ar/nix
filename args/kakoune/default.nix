@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, kak-one, kak-rainbower, ... }:
 let
   inherit (pkgs) lib;
   rcFiles = builtins.attrNames (builtins.readDir ./rc);
@@ -12,7 +12,7 @@ in {
     ];
     config = {
       autoReload = "yes";
-      #colorScheme = "pastel";
+      #colorScheme = "one-dark"; something overrides, append to config works
       incrementalSearch = true;
       showMatching = true;
       indentWidth = 2;
@@ -25,10 +25,6 @@ in {
         enable = true;
         highlightCursor = true;
         relative = true;
-      };
-      scrollOff = {
-        columns = 0;
-        lines = 5;
       };
       keyMappings = [
         {
@@ -76,9 +72,9 @@ in {
       #hooks = [];
     };
     extraConfig = ''
-  	hook global ModuleLoaded fzf-grep %{
-    	set-option global fzf_grep_command 'rg'
-  	}
+    hook global ModuleLoaded fzf-grep %{
+      set-option global fzf_grep_command 'rg'
+    }
 
     add-highlighter global/trailing-ws regex ^[^\n]{80}([^\n]) 1:+r
     add-highlighter global/ wrap -word -indent -width 100 -marker ^
@@ -111,10 +107,12 @@ in {
     }
 
     ${lib.concatMapStringsSep "\n\n" builtins.readFile rcPaths}
+    colorscheme one-dark
     '';
   };
 
   xdgConfigs = {
     "kak-lsp/kak-lsp.toml".text = (import ./kak-lsp-toml.nix pkgs);
+    "kak/colors".source = "${kak-one}/colors";
   };
 }

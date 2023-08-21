@@ -110,4 +110,10 @@
   # See https://github.com/redhat-developer/yaml-language-server#language-server-settings
   # Defaults are at https://github.com/redhat-developer/yaml-language-server/blob/master/src/yamlSettings.ts
   # yaml.format.enable = true
+
+  [language.graphql]
+  filetypes = ["graphql", "typescript", "javascript"]
+  roots = [".graphqlrc"]
+  command = "${nodePackages.graphql-language-service-cli}/bin/graphql-lsp"
+  args = ["server", "-m", "stream"]
   ''

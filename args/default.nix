@@ -7,7 +7,7 @@
 let
   args = {
     inherit args pkgs lib config;
-    inherit (inputs) zshPure;
+    inherit (inputs) zshPure kak-one kak-rainbower;
 
     i3 = import ./i3.nix args;
     x = import ./x args;
@@ -22,5 +22,6 @@ let
     pubkey = builtins.readFile /home/m0ar/.ssh/id_rsa.pub;
     scripts = import ./scripts args;
     ssh = import ./ssh args;
+    autorandr = import ./autorandr args;
   };
 in args

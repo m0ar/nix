@@ -13,9 +13,20 @@
       url = "github:sindresorhus/pure";
       flake = false;
     };
+    kak-one = {
+      url = "github:raiguard/kak-one";
+      flake = false;
+    };
+    kak-rainbower = {
+      url = "github:crizan/kak-rainbower";
+      flake = false;
+    };
   };
 
-  outputs = { self, home-manager, nixgl, nixpkgs, utils, zshPure }@flakeInputs:
+  outputs = {
+    self, home-manager, nixgl, nixpkgs, utils,
+    zshPure, kak-one, kak-rainbower
+  }@flakeInputs:
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs {

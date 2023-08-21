@@ -10,7 +10,6 @@
   # Group-writable store trips compinit security checks
   completionInit = "autoload -U compinit && compinit -u";
   shellAliases = {
-    evl = "EVL_HOME=$(git root) nix run evl#evl --";
     cp = "cp -i";
     ls = "ls --color=auto";
     nix = "noglob nix"; # makes flake URI play nice
@@ -23,9 +22,12 @@
     autoload -U promptinit; promptinit
     prompt pure
 
-    # Append nortical config
-    if [[ -e ~/.zshrc_nortical ]]; then
-      source ~/.zshrc_nortical
+    [ -z "$NVM_DIR" ] && export NVM_DIR="$HOME/.nvm"
+      source /usr/share/nvm/nvm.sh
+      source /usr/share/nvm/bash_completion
+      source /usr/share/nvm/install-nvm-exec
+    if [ -e /home/m0ar/.cargo/bin/cpk ]; then
+      source <(cpk completion zsh)
     fi
   '';
 }

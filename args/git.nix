@@ -19,7 +19,7 @@
       !git log \
             --color \
             --graph \
-            --pretty=format:'%Cblue%h%Creset -%C(auto)%d%Creset %s %Cgreen(%cr)%C(bold blue) <%an> %Creset'" \
+            --pretty=format:"'%Cblue%h%Creset -%C(auto)%d%Creset %s %Cgreen(%cr)%C(bold blue) <%an> %Creset'" \
             --abbrev-commit \
             --all \
             | sed 's|refs/tf_ok/| |g'\

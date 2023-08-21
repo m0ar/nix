@@ -19,9 +19,8 @@ export LESS_TERMCAP_ue=$'\E[0m'
 export LESS_TERMCAP_us=$'\E[01;36m'
 export LESS=-R
 
-export PATH=/home/m0ar/.mix/escripts:$PATH
+export PATH=/home/m0ar/.cargo/bin:$PATH
 export PATH=/home/m0ar/go/bin:$PATH
-export PATH=/home/m0ar/.ghcup/bin:$PATH
 export PATH=/home/m0ar/scripts:$PATH
 # Remove dupes
 typeset -U PATH

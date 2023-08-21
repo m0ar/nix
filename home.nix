@@ -8,12 +8,16 @@
 let
   args = import ./args { inherit config pkgs lib inputs; };
   inherit (args) pubkey x kakoune zsh kitty rofi git tmux
-    scripts dunst polybar ssh;
+    scripts dunst polybar ssh autorandr;
+
 in rec {
   targets.genericLinux.enable = true;
   nixpkgs.config = {
     allowUnfree = true;
     allowBroken = true;
+    permittedInsecurePackages = [
+      "nodejs-16.20.0"
+    ];
   };
   programs.home-manager.enable = true;
   home.stateVersion = "22.11";
@@ -56,20 +60,25 @@ in rec {
       (pass.withExtensions (ext: with ext; [ pass-import pass-genphrase ]))
       qtpass
       playerctl
+      svtplay-dl
+      xclip
+      tree
+      dig
+
+      # make dependencies of pixlock script
+      scrot
 
       # programming
       terraform
-      cloudflared
+      nodePackages.yarn
+      nodePackages.wrangler
+      kubo # ipfs
 
-      # media
+      # graphical
       audacity
-      svtplay-dl
-
-      # social
       obsidian
       slack
       discord
-      tdesktop # telegram
 
       # fonts
       fontconfig
@@ -79,7 +88,7 @@ in rec {
     ] ++ builtins.attrValues scripts;
 
   programs = {
-    inherit zsh kitty tmux rofi ssh;
+    inherit zsh kitty tmux rofi ssh autorandr;
     kakoune = kakoune.program;
     git = git {
       allowedSignersFile = home.file.sshAllowedSigners.target;

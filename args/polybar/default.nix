@@ -20,7 +20,7 @@
       foreground = colors.foreground;
       line.size = "3pt";
       border = {
-        size = "4pt";
+        size = "0pt";
         color = "#00000000";
       };
       padding = {
@@ -31,9 +31,8 @@
       module.margin = 1;
       separator = "|";
 
-      "font-0" = "monospace;3";
-      "font-1" = "FontAwesome;3";
-
+      "font-0" = "FiraCode:size=10;3";
+      "font-1" = "FontAwesome:size=10;3";
 
       modules = {
         left = "xworkspaces xwindow";
