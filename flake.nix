@@ -4,6 +4,7 @@
   inputs = {
     utils.url = "github:numtide/flake-utils";
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    icetan-overlay.url = "github:icetan/nixpkgs-overlay";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -25,13 +26,13 @@
 
   outputs = {
     self, home-manager, nixgl, nixpkgs, utils,
-    zshPure, kak-one, kak-rainbower
+    zshPure, kak-one, kak-rainbower, icetan-overlay
   }@flakeInputs:
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs {
         inherit system;
-        overlays = [ nixgl.overlay ];
+        overlays = [ nixgl.overlay ] ++ icetan-overlay.overlays.default;
       };
     in {
       homeConfigurations.m0ar = home-manager.lib.homeManagerConfiguration {

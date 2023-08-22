@@ -113,7 +113,7 @@
 
   [language.graphql]
   filetypes = ["graphql", "typescript", "javascript"]
-  roots = [".graphqlrc"]
+  roots = [".graphqlrc", ".git"]
   command = "${nodePackages.graphql-language-service-cli}/bin/graphql-lsp"
   args = ["server", "-m", "stream"]
   ''

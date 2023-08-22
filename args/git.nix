@@ -34,6 +34,9 @@
   extraConfig = {
     commit = { gpgSign = true; };
     tag = { gpgSign = true; };
+    init = {
+      defaultBranch = "main";
+    };
     gpg = {
       format = "ssh";
       ssh = { allowedSignersFile = "~/" + allowedSignersFile; };

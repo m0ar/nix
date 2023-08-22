@@ -101,6 +101,7 @@ in {
       # lsp-inlay-diagnostics-enable window
       map -docstring "Show hover info" global user h ': lsp-hover<ret>'
     }
+    define-command lsp-restart -docstring 'restart the language server' %{ lsp-stop; lsp-start }
 
     hook global BufCreate .*/?PKGBUILD %{
         set-option buffer filetype sh

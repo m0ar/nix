@@ -8,7 +8,7 @@
 let
   args = import ./args { inherit config pkgs lib inputs; };
   inherit (args) pubkey x kakoune zsh kitty rofi git tmux
-    scripts dunst polybar ssh autorandr;
+    scripts dunst polybar ssh autorandr helix;
 
 in rec {
   targets.genericLinux.enable = true;
@@ -85,10 +85,11 @@ in rec {
       (nerdfonts.override { fonts = [ "NerdFontsSymbolsOnly" ]; })
       fira-code
       font-awesome_4
-    ] ++ builtins.attrValues scripts;
+    ] ++ builtins.attrValues scripts ++ helix.languageServers;
 
   programs = {
     inherit zsh kitty tmux rofi ssh autorandr;
+    helix = helix.program;
     kakoune = kakoune.program;
     git = git {
       allowedSignersFile = home.file.sshAllowedSigners.target;

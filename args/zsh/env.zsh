@@ -1,4 +1,4 @@
-export EDITOR=kak
+export EDITOR=hx
 
 if [[ `uname` == Darwin ]]; then
     MAX_MEMORY_UNITS=KB
