@@ -7,7 +7,7 @@
 }:
 let
   args = import ./args { inherit config pkgs lib inputs; };
-  inherit (args) pubkey x kakoune zsh kitty rofi git tmux
+  inherit (args) pubkey x zsh kitty rofi git tmux
     scripts dunst polybar ssh autorandr helix lsd;
 
 in rec {
@@ -36,8 +36,7 @@ in rec {
 
   xdg = {
     enable = true;
-    configFile = kakoune.xdgConfigs
-      // dunst.configFiles;
+    configFile = dunst.configFiles;
   };
 
   # Enable fc-cache to find nix fonts
@@ -90,7 +89,6 @@ in rec {
   programs = {
     inherit zsh kitty tmux rofi ssh autorandr lsd;
     helix = helix.program;
-    kakoune = kakoune.program;
     git = git {
       allowedSignersFile = home.file.sshAllowedSigners.target;
     };

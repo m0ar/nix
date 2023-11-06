@@ -9,9 +9,34 @@
       theme = "onedark";
       editor = {
         line-number = "relative";
-        auto-save = true;
+        cursorline = true;
+        auto-save = false;
+        completion-replace = true;
+        color-modes = true;
+        bufferline = "multiple";
+        smart-tab.enable = true;
         soft-wrap = {
           enable = true;
+        };
+        statusline = {
+          left = [ 
+            "mode"
+            "spinner"
+            "file-name"
+            "read-only-indicator"
+            "file-modification-indicator"
+          ];
+          center = [
+            "workspace-diagnostics"
+            "version-control"
+          ];
+          right = [
+            "diagnostics"
+            "selections"
+            "register"
+            "position"
+            "file-encoding"
+          ];
         };
         indent-guides = {
           render = true;
@@ -32,6 +57,10 @@
         }; 
         lsp = {
           display-messages = true;
+          display-inlay-hints = true;
+        };
+        file-picker = {
+          hidden = false;
         };
       };
     };
@@ -46,7 +75,7 @@
     shellcheck
     kotlin-language-server
     elmPackages.elm-language-server
-    python39Packages.python-lsp-server
+    python311Packages.python-lsp-server
   ] ++ (with nodePackages; [
     typescript-language-server
     vscode-json-languageserver-bin

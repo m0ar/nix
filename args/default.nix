@@ -16,7 +16,6 @@ let
     kitty = import ./kitty.nix args;
     tmux = import ./tmux args;
     rofi = import ./rofi.nix args;
-    kakoune = import ./kakoune args;
     helix = import ./helix args;
     dunst = import ./dunst args;
     polybar = import ./polybar args;
