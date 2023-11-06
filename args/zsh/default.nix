@@ -3,10 +3,10 @@
 }:
 {
   enable = true;
-  enableSyntaxHighlighting = true;
   enableAutosuggestions = true;
   enableVteIntegration = true;
   autocd = true;
+  syntaxHighlighting.enable = true;
   # Group-writable store trips compinit security checks
   completionInit = "autoload -U compinit && compinit -u";
   shellAliases = {
@@ -26,6 +26,8 @@
       source /usr/share/nvm/nvm.sh
       source /usr/share/nvm/bash_completion
       source /usr/share/nvm/install-nvm-exec
+
+    # Ceramic Pocket Knife
     if [ -e /home/m0ar/.cargo/bin/cpk ]; then
       source <(cpk completion zsh)
     fi

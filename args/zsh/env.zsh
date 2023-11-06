@@ -1,4 +1,5 @@
 export EDITOR=hx
+export SUDO_EDITOR=hx
 
 if [[ `uname` == Darwin ]]; then
     MAX_MEMORY_UNITS=KB

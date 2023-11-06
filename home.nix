@@ -8,7 +8,7 @@
 let
   args = import ./args { inherit config pkgs lib inputs; };
   inherit (args) pubkey x kakoune zsh kitty rofi git tmux
-    scripts dunst polybar ssh autorandr helix;
+    scripts dunst polybar ssh autorandr helix lsd;
 
 in rec {
   targets.genericLinux.enable = true;
@@ -60,7 +60,6 @@ in rec {
       (pass.withExtensions (ext: with ext; [ pass-import pass-genphrase ]))
       qtpass
       playerctl
-      svtplay-dl
       xclip
       tree
       dig
@@ -71,8 +70,9 @@ in rec {
       # programming
       terraform
       nodePackages.yarn
-      nodePackages.wrangler
       kubo # ipfs
+      jdk11
+      maven
 
       # graphical
       audacity
@@ -88,7 +88,7 @@ in rec {
     ] ++ builtins.attrValues scripts ++ helix.languageServers;
 
   programs = {
-    inherit zsh kitty tmux rofi ssh autorandr;
+    inherit zsh kitty tmux rofi ssh autorandr lsd;
     helix = helix.program;
     kakoune = kakoune.program;
     git = git {
@@ -111,7 +111,6 @@ in rec {
     inherit polybar;
     playerctld.enable = true;
     pasystray.enable = true;
-    # blueman-applet.enable = true;
     network-manager-applet.enable = true;
     flameshot.enable = true;
   };

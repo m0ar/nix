@@ -1,6 +1,7 @@
 setopt extendedglob
 setopt nocaseglob
 setopt appendhistory
+unsetopt sharehistory
 # Navigate words with ctrl+arrow keys
 bindkey '^[Oc' forward-word
 bindkey '^[Od' backward-word

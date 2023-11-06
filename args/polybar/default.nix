@@ -128,22 +128,22 @@
       interval = 5;
       format = {
         connected = "<label-connected>";
-        disconnected = label.disconnected;
+        disconnected = "<label-disconnected>";
       };
-      label.disconnected =
-        "%{F${colors.primary}}%ifname%%{F-} disconnected";
     };
 
     "module/wlan" = {
       "inherit" = "network-base";
       interface.type = "wireless";
-      label.connected = "%{F${colors.primary}}%ifname%%{F-} %essid%";
+      label.connected = "%{F${colors.primary}}wlan%{F-} %essid%";
+      label.disconnected =
+        "%{F${colors.primary}}wlan%{F-} disconnected";
     };
 
     "module/eth" = {
       "inherit" = "network-base";
       interface.type = "wired";
-      label.connected = "%{F${colors.primary}}%ifname%%{F-} %local_ip%";
+      label.connected = "%{F${colors.primary}}eth%{F-} %local_ip%";
     };
 
     "module/date" = {

@@ -24,5 +24,6 @@ let
     scripts = import ./scripts args;
     ssh = import ./ssh args;
     autorandr = import ./autorandr args;
+    lsd = import ./lsd args;
   };
 in args
