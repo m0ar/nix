@@ -123,7 +123,7 @@
       label = "%percentage:2%%";
     };
 
-    "network-base" = rec {
+    "network-base" = {
       type = "internal/network";
       interval = 5;
       format = {
@@ -158,7 +158,7 @@
       type = "internal/battery";
       battery = "BAT0";
       adapter = "ADP1";
-      full.at = 98;
+      full.at = 96;
       low.at = 15;
       poll.interval = 5;
 

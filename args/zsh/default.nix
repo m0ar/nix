@@ -8,7 +8,7 @@
   autocd = true;
   syntaxHighlighting.enable = true;
   # Group-writable store trips compinit security checks
-  completionInit = "autoload -U compinit && compinit -u";
+  #completionInit = "autoload -U compinit && compinit -u";
   shellAliases = {
     cp = "cp -i";
     ls = "ls --color=auto";
@@ -22,14 +22,9 @@
     autoload -U promptinit; promptinit
     prompt pure
 
-    [ -z "$NVM_DIR" ] && export NVM_DIR="$HOME/.nvm"
-      source /usr/share/nvm/nvm.sh
-      source /usr/share/nvm/bash_completion
-      source /usr/share/nvm/install-nvm-exec
-
     # Ceramic Pocket Knife
     if [ -e /home/m0ar/.cargo/bin/cpk ]; then
       source <(cpk completion zsh)
     fi
-  '';
+  '' + builtins.readFile ./nvm.zsh;
 }

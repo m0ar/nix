@@ -173,8 +173,8 @@ in {
             command = "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1";
           }
           { command = "brave"; }
-          { command = "obsidian"; }
-          { command = "spotify"; }
+          # { command = "obsidian"; }
+          # { command = "spotify"; }
           { command = "xss-lock --transfer-sleep-lock -- ${pixlock} --nofork"; }
           { command = "blueman-applet"; }
         ];

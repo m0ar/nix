@@ -26,8 +26,4 @@ export PATH=/home/m0ar/scripts:$PATH
 # Remove dupes
 typeset -U PATH
 
-if [ -e /home/m0ar/.nix-profile/etc/profile.d/nix.sh ]; then
-  . /home/m0ar/.nix-profile/etc/profile.d/nix.sh
-fi
-
 [ "$TERM" = "xterm-kitty" ] && alias ssh="kitty +kitten ssh"
