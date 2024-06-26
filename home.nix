@@ -8,7 +8,8 @@
 let
   args = import ./args { inherit config pkgs lib inputs; };
   inherit (args) pubkey x zsh kitty rofi git tmux
-    scripts dunst polybar ssh autorandr helix lsd;
+    scripts dunst polybar ssh autorandr helix lsd
+    flameshot;
 
 in rec {
   targets.genericLinux.enable = true;
@@ -71,7 +72,9 @@ in rec {
       nodePackages.yarn
       kubo # ipfs
       jdk11
+      gh
       maven
+      rustc
 
       # graphical
       audacity
@@ -106,10 +109,9 @@ in rec {
   };
 
   services = {
-    inherit polybar;
+    inherit polybar flameshot;
     playerctld.enable = true;
     pasystray.enable = true;
     network-manager-applet.enable = true;
-    flameshot.enable = true;
   };
 }

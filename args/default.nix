@@ -24,5 +24,6 @@ let
     ssh = import ./ssh args;
     autorandr = import ./autorandr args;
     lsd = import ./lsd args;
+    flameshot = import ./flameshot args;
   };
 in args

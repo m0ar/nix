@@ -11,7 +11,7 @@
         line-number = "relative";
         cursorline = true;
         auto-save = false;
-        completion-replace = true;
+        completion-replace = false;
         color-modes = true;
         bufferline = "multiple";
         smart-tab.enable = true;
@@ -61,6 +61,7 @@
         };
         file-picker = {
           hidden = false;
+          git-ignore = true;
         };
       };
     };
@@ -74,6 +75,7 @@
     nil
     shellcheck
     kotlin-language-server
+    rust-analyzer
     elmPackages.elm-language-server
     python311Packages.python-lsp-server
   ] ++ (with nodePackages; [

@@ -22,11 +22,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1699025595,
-        "narHash": "sha256-e+o4PoSu2Z6Ww8y/AVUmMU200rNZoRK+p2opQ7Db8Rg=",
+        "lastModified": 1710164657,
+        "narHash": "sha256-l64+ZjaQAVkHDVaK0VHwtXBdjcBD6nLBD+p7IfyBp/w=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "8765d4e38aa0be53cdeee26f7386173e6c65618d",
+        "rev": "017b12de5b899ef9b64e2c035ce257bfe95b8ae2",
         "type": "github"
       },
       "original": {
@@ -50,11 +50,11 @@
         "utils": "utils"
       },
       "locked": {
-        "lastModified": 1694599824,
-        "narHash": "sha256-aZaG6zl+8/AGpnlAKdmppRH3KXHuahq98D/WthTA37E=",
+        "lastModified": 1699527857,
+        "narHash": "sha256-I53XQtc0JX4coowdR7/DDa8hQJvR1QXVn0lbn6prIys=",
         "owner": "icetan",
         "repo": "nixpkgs-overlay",
-        "rev": "b1e825363cbddbc19845aaadff003b8e561b3dbd",
+        "rev": "7de40da567c16694115c0e0dad0f6dbf84969296",
         "type": "github"
       },
       "original": {
@@ -82,11 +82,11 @@
     "kak-one": {
       "flake": false,
       "locked": {
-        "lastModified": 1684257604,
-        "narHash": "sha256-pwitG4l4GXnsVv0BWHlXT32GXhpO0IdnLs3aUIyCy8s=",
+        "lastModified": 1701840513,
+        "narHash": "sha256-p/ImGFz/mNvm5xN8hLvt6OwSTKKW/J1tKT/3rwaTyvw=",
         "owner": "raiguard",
         "repo": "kak-one",
-        "rev": "0cb64ad7162910fe2a5b43f3d0d0616e54baca56",
+        "rev": "bc3a1335ff1913d64416668fc9161733b6b48540",
         "type": "github"
       },
       "original": {
@@ -98,11 +98,11 @@
     "kak-rainbower": {
       "flake": false,
       "locked": {
-        "lastModified": 1630097206,
-        "narHash": "sha256-+HGL+l+Zdxo6WaY9T1V8Z/7SnQ9b5pKczHXidvBS1UM=",
+        "lastModified": 1708638022,
+        "narHash": "sha256-17hRybAFv0ERtNv+w02my6bDtvZGedw+yr9NpF7ncug=",
         "owner": "crizan",
         "repo": "kak-rainbower",
-        "rev": "692c196650edd97da9ed6c275bb9b261630d063d",
+        "rev": "4dcb45b506efc64eed0dbd7e97b8aa703baf1278",
         "type": "github"
       },
       "original": {
@@ -114,15 +114,16 @@
     "kak-tree-sitter-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1694378399,
-        "narHash": "sha256-B0NOoQ41D8LLo1QCDLTD5d/eyaYy3LbYH7qbyYeGlHA=",
+        "lastModified": 1694286346,
+        "narHash": "sha256-ZsTlFCXw29lfJA3uYoEhox2n1ZtsFTQkSlKoQUN5P8w=",
         "owner": "phaazon",
         "repo": "kak-tree-sitter",
-        "rev": "2cb7898880ffa63e952662ff6f574f55c6e29fff",
+        "rev": "e247bbaf7241936015680462fd154c56255d3236",
         "type": "github"
       },
       "original": {
         "owner": "phaazon",
+        "ref": "kak-tree-sitter-v0.4.5",
         "repo": "kak-tree-sitter",
         "type": "github"
       }
@@ -294,11 +295,11 @@
     },
     "nixpkgs_4": {
       "locked": {
-        "lastModified": 1699186365,
-        "narHash": "sha256-Pxrw5U8mBsL3NlrJ6q1KK1crzvSUcdfwb9083sKDrcU=",
+        "lastModified": 1710222005,
+        "narHash": "sha256-irXySffHz7b82dZIme6peyAu+8tTJr1zyxcfUPhqUrg=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "a0b3b06b7a82c965ae0bb1d59f6e386fe755001d",
+        "rev": "9a9a7552431c4f1a3b2eee9398641babf7c30d0e",
         "type": "github"
       },
       "original": {
@@ -388,11 +389,11 @@
         "systems": "systems_2"
       },
       "locked": {
-        "lastModified": 1694529238,
-        "narHash": "sha256-zsNZZGTGnMOf9YpHKJqMSsa0dXbfmxeoJ7xHlrt+xmY=",
+        "lastModified": 1710146030,
+        "narHash": "sha256-SZ5L6eA7HJ/nmkzGG7/ISclqe6oZdOZTNoesiInkXPQ=",
         "owner": "numtide",
         "repo": "flake-utils",
-        "rev": "ff7b65b44d01cf9ba6a71320833626af21126384",
+        "rev": "b1d9ab70662946ef0850d488da1c9019f3a9752a",
         "type": "github"
       },
       "original": {
@@ -404,11 +405,11 @@
     "zshPure": {
       "flake": false,
       "locked": {
-        "lastModified": 1687718525,
-        "narHash": "sha256-TR4CyBZ+KoZRs9XDmWE5lJuUXXU1J8E2Z63nt+FS+5w=",
+        "lastModified": 1709132273,
+        "narHash": "sha256-BmQO4xqd/3QnpLUitD2obVxL0UulpboT8jGNEh4ri8k=",
         "owner": "sindresorhus",
         "repo": "pure",
-        "rev": "87e6f5dd4c793f6d980532205aaefe196780606f",
+        "rev": "a02209d36c8509c0e62f44324127632999c9c0cf",
         "type": "github"
       },
       "original": {
