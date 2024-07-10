@@ -14,31 +14,34 @@
       url = "github:sindresorhus/pure";
       flake = false;
     };
-    kak-one = {
-      url = "github:raiguard/kak-one";
-      flake = false;
-    };
-    kak-rainbower = {
-      url = "github:crizan/kak-rainbower";
-      flake = false;
+    poetry2nix = {
+      url = "github:nix-community/poetry2nix";
+      # inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
   outputs = {
     self, home-manager, nixgl, nixpkgs, utils,
-    zshPure, kak-one, kak-rainbower, icetan-overlay
-  }@flakeInputs:
+    zshPure, icetan-overlay, poetry2nix
+  }@inputs:
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs {
         inherit system;
         overlays = [ nixgl.overlay ] ++ icetan-overlay.overlays.default;
       };
+      server = nixpkgs.lib.nixosSystem {
+        inherit system;
+        specialArgs = { inherit inputs; };
+        modules = [ ./server.nix ];
+      };
     in {
       homeConfigurations.m0ar = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
         modules = [ ./home.nix ];
-        extraSpecialArgs = { inputs = flakeInputs; };
+        extraSpecialArgs = { inherit inputs; };
       };
+      nixosConfigurations.blep = server;
+      vms.blep = server.config.system.build.vm;
     };
 }
