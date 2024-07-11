@@ -9,8 +9,7 @@ let
   args = import ./args { inherit config pkgs lib inputs; };
   inherit (args) pubkey x zsh kitty rofi git tmux
     scripts dunst polybar ssh autorandr helix lsd
-    flameshot;
-
+    flameshot gtk harlequin;
 in rec {
   targets.genericLinux.enable = true;
   nixpkgs.config = {
@@ -34,10 +33,10 @@ in rec {
   } // x.configFiles;
 
   xsession = x.session;
-
+  inherit gtk;
+  
   xdg = {
     enable = true;
-    configFile = dunst.configFiles;
   };
 
   # Enable fc-cache to find nix fonts
