@@ -25,5 +25,6 @@ let
     autorandr = import ./autorandr args;
     lsd = import ./lsd args;
     flameshot = import ./flameshot args;
+    harlequin = import ./harlequin.nix args;
   };
 in args
