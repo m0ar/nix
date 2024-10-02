@@ -22,7 +22,6 @@
             --pretty=format:"'%Cblue%h%Creset -%C(auto)%d%Creset %s %Cgreen(%cr)%C(bold blue) <%an> %Creset'" \
             --abbrev-commit \
             --all \
-            | sed 's|refs/tf_ok/| |g'\
             | sed 's|tag:||g'\
             | sed 's|HEAD| head|g'\
             | sed 's|origin/|  |g'\
@@ -30,8 +29,25 @@
     '';
     root = "rev-parse --show-toplevel";
   };
-  delta.enable = true;
+  delta = {
+    enable = true;
+    options = {
+      dark = true;
+      navigate = true;
+      line-numbers = true;
+      hyperlinks = true;
+    };
+  };
   extraConfig = {
+    diff = {
+      colorMoved = "default";
+    };
+    merge = {
+      conflictStyle = "zdiff3";
+    };
+    status = {
+      showUntrackedFiles = "all";
+    };
     commit = { gpgSign = true; };
     tag = { gpgSign = true; };
     init = {

@@ -1,6 +1,5 @@
 { pkgs, ... }: {
   enable = true;
-  environment = { TERM = "xterm-256color"; };
   font = {
     package = pkgs.fira-code;
     name = "FiraCode";
