@@ -20,9 +20,15 @@ in rec {
     ];
   };
   programs.home-manager.enable = true;
+
   home.stateVersion = "22.11";
   home.homeDirectory = "/home/m0ar";
   home.username = "m0ar";
+  home.sessionVariables = {
+    EDITOR = "hx";
+    SUDO_EDITOR = "hx";
+    BROWSER = "brave";
+  };
 
   # Link extra configuration files
   home.file = {

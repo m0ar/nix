@@ -18,18 +18,14 @@
 # e.g. do `nvm alias default stable`
 ####
 
-#t1="$(date +%s%3N)"
 [ -z "$NVM_DIR" ] && export NVM_DIR="$HOME/.nvm"
 source /usr/share/nvm/nvm.sh
 source /usr/share/nvm/bash_completion
 source /usr/share/nvm/install-nvm-exec
-#t2="$(date +%s%3N)"
-#echo "nvm load: $((t2-t1))ms"
 
 # place this after nvm initialization!
 autoload -U add-zsh-hook
 load-nvmrc() {
-  local t1="$(date +%s%3N)"
   local node_version="$(nvm version)"
   local nvmrc_path="$(nvm_find_nvmrc)"
 
@@ -45,8 +41,6 @@ load-nvmrc() {
     echo "Reverting to nvm default version"
     nvm use default
   fi
-  local t2="$(date +%s%3N)"
-  echo "load-nvmrc: $((t2-t1))ms"
 }
 add-zsh-hook chpwd load-nvmrc
 load-nvmrc
