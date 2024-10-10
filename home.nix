@@ -52,12 +52,12 @@ in rec {
       # meta
       nix-tree
       nix-du
-      nixfmt
+      nixfmt-classic
       nix-diff
+      nix-index
 
       # util
       btop
-      ripgrep
       unzip
       ncdu
       glow
@@ -68,14 +68,22 @@ in rec {
       xclip
       tree
       dig
+      netcat-openbsd
+      bat
+      fnm
+      yq
 
       # make dependencies of pixlock script
       scrot
 
       # programming
       terraform
+      kubectl
+      kubecolor
+      k9s
+      # vault # suuper heavy build
       nodePackages.yarn
-      kubo # ipfs
+      kubo
       jdk11
       gh
       maven
@@ -86,13 +94,17 @@ in rec {
       obsidian
       slack
       discord
+      xcolor
 
       # fonts
       fontconfig
       (nerdfonts.override { fonts = [ "NerdFontsSymbolsOnly" ]; })
       fira-code
       font-awesome_4
-    ] ++ builtins.attrValues scripts ++ helix.languageServers;
+
+      # own packages
+      harlequin
+    ] ++ builtins.attrValues scripts ++ builtins.attrValues helix.languageServers;
 
   programs = {
     inherit zsh kitty tmux rofi ssh autorandr lsd;
@@ -111,6 +123,7 @@ in rec {
     keychain.enable = true;
     jq.enable = true;
     fzf.enable = true;
+    ripgrep.enable = true;
   };
 
   services = {
@@ -118,5 +131,6 @@ in rec {
     playerctld.enable = true;
     pasystray.enable = true;
     network-manager-applet.enable = true;
+    picom.enable = true;
   };
 }
