@@ -4,13 +4,19 @@
   script = "polybar top &";
   settings = rec {
     colors = {
-      background = "#282A2E";
+      background = "#000000";
       background-alt = "#373B41";
-      foreground = "#C5C8C6";
-      primary = "#F0C674";
-      secondary = "#8ABEB7";
-      alert = "#A54242";
-      disabled = "#707880";
+      foreground = "#ABB2BF";
+      muted = "#585858";
+      urgent = "#E06C75";
+      primary = "#D19A66";
+      accent = "#90648B";
+      # background = "#282A2E";
+      # foreground = "#C5C8C6";
+      # primary = "#F0C674";
+      # secondary = "#8ABEB7";
+      # alert = "#A54242";
+      # disabled = "#707880";
     };
     "bar/top" = {
       width = "100%";
@@ -37,7 +43,7 @@
       modules = {
         left = "xworkspaces xwindow";
         center = "date";
-        right = "filesystem pulseaudio memory cpu wlan eth battery";
+        right = "filesystem memory cpu wlan eth battery";
       };
 
       cursor = {
@@ -54,19 +60,15 @@
       label = {
         active = "%name%";
         active-background = colors.background-alt;
-        active-underline = colors.primary;
+        # active-underline = colors.primary;
         active-padding = 1;
 
         occupied = "%name%";
         occupied-padding = 1;
 
         urgent = "%name%";
-        urgent-background = colors.alert;
+        urgent-background = colors.urgent;
         urgent-padding = 1;
-
-        empty = "%name%";
-        empty-foreground = colors.disabled;
-        empty-padding = 1;
       };
     };
 
@@ -80,38 +82,17 @@
       interval = 25;
       "mount-0" = "/";
       label = {
-        mounted = "%{F#F0C674}%mountpoint%%{F-} %percentage_used%%";
-        unmounted = "%mountpoint% not mounted";
-        "unmounted-foreground" = colors.disabled;
-      };
-    };
-
-    "module/pulseaudio" = rec {
-      type = "internal/pulseaudio";
-
-      format = {
-        volume-prefix = "VOL ";
-        volume-prefix-foreground = colors.primary;
-        volume = label.volume;
-      };
-
-      label = {
-        volume = "%percentage%%";
-        muted = "muted";
-        muted-foreground = colors.disabled;
+        mounted = "%{F${colors.primary}}%mountpoint%%{F-} %percentage_used%%";
       };
     };
 
     "module/memory" = {
       type = "internal/memory";
       interval = 2;
-      format = {
-        prefix = "RAM ";
-        prefix-foreground = colors.primary;
-      };
-      label = "%percentage_used:2%%";
+      warn-percentage = 50;
+      label = "%{F${colors.primary}}RAM%{F-} %percentage_used:2%%";
+      label-warn = "%{F${colors.urgent}}RAM%{F-} %percentage_used:2%%";
     };
-
 
     "module/cpu" = {
       type = "internal/cpu";
@@ -158,7 +139,7 @@
       type = "internal/battery";
       battery = "BAT0";
       adapter = "ADP1";
-      full.at = 96;
+      full.at = 92;
       low.at = 15;
       poll.interval = 5;
 
@@ -174,7 +155,7 @@
         charging = "Charging %percentage%%";
         discharging = "%{F${colors.primary}}Discharging%{F-} %percentage%%";
         full = "Fully charged";
-        low = "%{F${colors.alert}}Discharging%{F-} %percentage%%";
+        low = "%{F${colors.urgent}}Discharging%{F-} %percentage%%";
       };
 
       ramp.capacity = {
@@ -208,8 +189,8 @@
         };
 
         low = {
-          "0" = "%{F${colors.alert}}%{F-}";
-          "1" = " ";
+          "0" = "%{F${colors.urgent}}%{F-}";
+          "1" = "  ";
           framerate = 500;
         };
       };
