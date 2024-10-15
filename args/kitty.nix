@@ -14,6 +14,9 @@
   };
   keybindings = {
     "ctrl+shift+n" = "new_os_window_with_cwd";
+    # Blocks helix bindings
+    "ctrl+tab" = "no_op";
+    "ctrl+shift+tab" = "no_op";
   };
-  theme = "Afterglow";
+  theme = "One Dark";
 }

@@ -1,6 +1,7 @@
 { pkgs, ... }: {
   enable = true;
   terminal = "${pkgs.kitty}/bin/kitty";
+  font = "Fira Code 14";
   plugins = with pkgs; [
     rofi-calc
     rofi-systemd
@@ -13,8 +14,9 @@
     stores = [];
   };
   extraConfig = {
-    modi = "drun,calc,combi";
-    combi-modi = "systemd,emoji";
+    show = "combi";
+    combi-modes = "window,drun,run";
+    modes = "combi,emoji,calc";
   };
   theme = "Monokai";
 }

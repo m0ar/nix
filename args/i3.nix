@@ -121,7 +121,7 @@ in {
           }
         ];
         border = 3;
-        hideEdgeBorders = "smart";
+        hideEdgeBorders = "both";
         titlebar = false;
       };
       modifier = "Mod4";
@@ -136,7 +136,9 @@ in {
           { class = "Pavucontrol"; }
           { class = "Blueman-manager"; }
           { class = "flameshot"; }
-          { title = "zoom"; }
+          { class = "zoom"; }
+          { class = "system-config-printer"; }
+          { window_role = "pop-up"; }
         ];
       };
       keybindings = with pkgs;
@@ -156,7 +158,7 @@ in {
           "Print" = "exec ${nixgl.nixGLIntel}/bin/nixGLIntel flameshot gui";
           "--release ${modifier}+Shift+Return" = "exec ${pixlock}";
           "--release ${modifier}+space" =
-            "exec ${config.programs.rofi.finalPackage}/bin/rofi -show drun";
+            "exec ${config.programs.rofi.finalPackage}/bin/rofi -show combi";
         };
       startup =
         builtins.map (as: as // { notification = false; }) [
