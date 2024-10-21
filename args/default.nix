@@ -8,6 +8,7 @@ let
   args = {
     inherit args pkgs lib config;
     inherit (inputs) zshPure kak-one kak-rainbower;
+    poetry2nix = inputs.poetry2nix.lib.mkPoetry2Nix { inherit pkgs; };
 
     i3 = import ./i3.nix args;
     x = import ./x args;
@@ -25,6 +26,7 @@ let
     autorandr = import ./autorandr args;
     lsd = import ./lsd args;
     flameshot = import ./flameshot args;
+    gtk = import ./gtk.nix args;
     harlequin = import ./harlequin.nix args;
   };
 in args
