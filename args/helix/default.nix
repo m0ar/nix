@@ -1,4 +1,5 @@
 { pkgs
+, config
 , ... 
 }:
 let
@@ -158,7 +159,7 @@ in
         };
       };
     };
-    languages = {
+    languages = if config.home.username == "osmc" then {} else {
       language = [
         {
           name = "typescript";

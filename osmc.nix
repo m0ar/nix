@@ -49,7 +49,7 @@ in rec {
       (nerdfonts.override { fonts = [ "NerdFontsSymbolsOnly" ]; })
       fira-code
       font-awesome_4
-    ] ++ builtins.attrValues helix.languageServers;
+    ];
 
   programs = {
     inherit zsh ssh lsd;
