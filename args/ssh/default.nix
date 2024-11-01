@@ -14,17 +14,18 @@
 
     router = {
       hostname = "192.168.1.1";
-      user = "root";
+      port = 1234;
+      user = "m0ar";
       identityFile = "~/.ssh/id_rsa";
-      extraOptions = {
-        "HostKeyAlgorithms" = "+ssh-rsa";
-        "PubkeyAcceptedAlgorithms" = "+ssh-rsa";
-      };
+      # extraOptions = {
+      #   "HostKeyAlgorithms" = "+ssh-rsa";
+      #   "PubkeyAcceptedAlgorithms" = "+ssh-rsa";
+      # };
     };
 
     mediacenter = {
-      hostname = "192.168.99.99";
-      user = "pi";
+      hostname = "192.168.1.31";
+      user = "osmc";
       identityFile = "~/.ssh/id_rsa";
     };
   }; 
