@@ -44,7 +44,9 @@
         };
 
         osmc = home-manager.lib.homeManagerConfiguration {
-          inherit pkgs;
+          pkgs = import nixpkgs {
+            system = "aarch64-linux";
+          };
           modules = [ ./osmc.nix ];
           extraSpecialArgs = { inherit inputs; };
         };

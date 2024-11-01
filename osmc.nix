@@ -7,7 +7,7 @@
 }:
 let
   args = import ./args { inherit config pkgs lib inputs; };
-  inherit (args) pubkey zsh kitty git scripts ssh helix lsd;
+  inherit (args) pubkey zsh git ssh helix lsd;
 in rec {
   targets.genericLinux.enable = true;
   nixpkgs.config = {
@@ -52,7 +52,7 @@ in rec {
     ] ++ builtins.attrValues helix.languageServers;
 
   programs = {
-    inherit zsh kitty ssh lsd;
+    inherit zsh ssh lsd;
     helix = helix.program;
     git = git {
       allowedSignersFile = home.file.sshAllowedSigners.target;
