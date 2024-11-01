@@ -36,10 +36,18 @@
         modules = [ ./server.nix ];
       };
     in {
-      homeConfigurations.m0ar = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
-        modules = [ ./home.nix ];
-        extraSpecialArgs = { inherit inputs; };
+      homeConfigurations = {
+        m0ar = home-manager.lib.homeManagerConfiguration {
+          inherit pkgs;
+          modules = [ ./home.nix ];
+          extraSpecialArgs = { inherit inputs; };
+        };
+
+        osmc = home-manager.lib.homeManagerConfiguration {
+          inherit pkgs;
+          modules = [ ./osmc.nix ];
+          extraSpecialArgs = { inherit inputs; };
+        };
       };
       nixosConfigurations.blep = server;
       vms.blep = server.config.system.build.vm;
