@@ -37,13 +37,15 @@
       module.margin = 1;
       separator = "|";
 
-      "font-0" = "FiraCode:size=10;3";
-      "font-1" = "FontAwesome:size=10;3";
+      "font-0" = "Fira Code:size=10;2";
+      "font-1" = "Noto Color Emoji:scale=13;2";
+      # "font-2" = "Symbols Nerd Font Mono:size=10;2";
+      "font-2" = "FontAwesome:size=10;2";
 
       modules = {
         left = "xworkspaces xwindow";
         center = "date";
-        right = "filesystem memory cpu wlan eth battery";
+        right = "filesystem memory cpu wlan eth battery tray";
       };
 
       cursor = {
@@ -52,7 +54,17 @@
       };
 
       enable.ipc = true;
-      tray.position = "right";
+    };
+
+    "module/tray" = {
+      type = "internal/tray";
+      # format = {
+          # margin = "10px";
+      # };
+      tray = {
+        spacing = "5px";
+        size = "50%";
+      };
     };
 
     "module/xworkspaces" = {

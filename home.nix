@@ -9,7 +9,8 @@ let
   args = import ./args { inherit config pkgs lib inputs; };
   inherit (args) pubkey x zsh kitty rofi git tmux
     scripts dunst polybar ssh autorandr helix lsd
-    flameshot gtk harlequin;
+    flameshot gtk harlequin mpdris2 ncmpcpp
+    mopidy;
 in rec {
   targets.genericLinux.enable = true;
   nixpkgs.config = {
@@ -72,6 +73,8 @@ in rec {
       bat
       fnm
       yq
+      mktorrent
+      rsync
 
       # make dependencies of pixlock script
       scrot
@@ -80,7 +83,11 @@ in rec {
       terraform
       kubectl
       kubecolor
+      safe
+      krew
+      diffoci
       k9s
+      eksctl
       # vault # suuper heavy build
       nodePackages.yarn
       kubo
@@ -88,6 +95,7 @@ in rec {
       gh
       maven
       rustc
+      jetbrains.idea-ultimate
 
       # graphical
       audacity
@@ -99,6 +107,7 @@ in rec {
       # fonts
       fontconfig
       (nerdfonts.override { fonts = [ "NerdFontsSymbolsOnly" ]; })
+      noto-fonts-color-emoji
       fira-code
       font-awesome_4
 
@@ -107,19 +116,12 @@ in rec {
     ] ++ builtins.attrValues scripts ++ builtins.attrValues helix.languageServers;
 
   programs = {
-    inherit zsh kitty tmux rofi ssh autorandr lsd;
+    inherit zsh kitty tmux rofi ssh autorandr lsd ncmpcpp;
     helix = helix.program;
     git = git {
       allowedSignersFile = home.file.sshAllowedSigners.target;
     };
-    direnv = {
-      enable = true;
-      config = {
-        "whitelist" = {
-          "prefix" = [ "/home/m0ar/dev/nortical/evl" ];
-        };
-      };
-    };
+    direnv.enable = true;
     keychain.enable = true;
     jq.enable = true;
     fzf.enable = true;
@@ -127,7 +129,7 @@ in rec {
   };
 
   services = {
-    inherit polybar flameshot;
+    inherit polybar flameshot mpdris2 mopidy;
     playerctld.enable = true;
     pasystray.enable = true;
     network-manager-applet.enable = true;

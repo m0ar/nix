@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+set -e
+
+export DESCI_WORKDIR=$(cd "$(dirname "$0")" && pwd)
+. "$DESCI_WORKDIR/common"
+
+cli_help() {
+
+  cli_name=${0##*/}
+  echo "
+$cli_name
+DeSci automation
+
+Usage: $cli_name [command]
+Commands:
+  *         Help
+"
+  exit 1
+}
+
+case "$1" in
+  test|t)
+    "$DESCI_WORKDIR/commands/test" "$2"
+    ;;
+  *)
+    cli_help
+    ;;
+esac

@@ -14,6 +14,7 @@ bindkey '^[[Z' undo
 export PATH=/home/m0ar/go/bin:$PATH
 export PATH=/home/m0ar/.cargo/bin:$PATH
 export PATH=/home/m0ar/scripts:$PATH
+export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 # export PATH=/usr/lib/jvm/default/bin:$PATH
 
 # Remove dupes

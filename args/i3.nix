@@ -109,9 +109,9 @@ in {
       ];
       assigns = {
         "1" = [{ class = "Brave-browser"; }];
-        "3" = [{ class = "Code"; }];
-        "6" = [{ class = "Slack"; }];
-        "8" = [{ class = "obsidian"; }];
+        # "3" = [{ class = "Code"; }];
+        # "6" = [{ class = "Slack"; }];
+        # "8" = [{ class = "obsidian"; }];
       };
       window = {
         commands = [
@@ -191,6 +191,7 @@ in {
       default_border pixel 2
       default_floating_border normal
       hide_edge_borders none
+      workspace_auto_back_and_forth yes
     '';
   };
 }
