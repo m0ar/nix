@@ -46,7 +46,6 @@ in rec {
     enable = true;
   };
 
-  # Enable fc-cache to find nix fonts
   fonts.fontconfig.enable = true;
   home.packages = with pkgs;
     [
@@ -103,6 +102,7 @@ in rec {
       slack
       discord
       xcolor
+      brave
 
       # fonts
       fontconfig
