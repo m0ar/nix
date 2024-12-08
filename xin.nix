@@ -1,10 +1,10 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, inputs, ... }:
 
 {
-  imports =
-    [
-      ./xin-hardware.nix
-    ];
+  imports = [
+    ./xin-hardware.nix
+  ];
+
   nixpkgs = {
     config = {
       allowUnfree = true;
@@ -17,12 +17,13 @@
       powerOnBoot = true;
     };
   };
+
   nix = {
     settings = {
       experimental-features = [ "nix-command" "flakes" ];
       trusted-users = [ "root" "m0ar" ];
       substituters = [ "https://cache.nixos.org" ];
-      trusted-public-keys = [ "cache.nixos.org-1:6NCHdD59X431oOgWypbMrAURkbJ16ZPMQF" ];
+      trusted-public-keys = [ "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=" ];
     };
     gc = {
       automatic = true;
@@ -32,6 +33,7 @@
   };
 
   boot = {
+    kernelPackages = pkgs.linuxPackages_latest;
     initrd.luks.devices = {
       "cryptlvm" = {
         device = "/dev/nvme0n1p6";
@@ -59,10 +61,15 @@
     { device = "/dev/nixos/swap"; }
   ];
 
-  networking.hostName = "xin"; # Define your hostname.
-  networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
+  networking = {
+    hostName = "xin";
+    wireless.iwd.enable = true;
+    networkmanager = {
+      enable = true; 
+      wifi.backend = "iwd";
+    };
+  };
 
-  # Set your time zone.
   time.timeZone = "Europe/Stockholm";
 
   # Select internationalisation properties.
@@ -78,49 +85,59 @@
       enable = true;
       packages = [  pkgs.dconf ];
     };
+    # kmscon = {
+    #   enable = true;
+    #   fonts = [{ name = "Fira Code"; package = pkgs.fira-code; }];
+    #   hwRender = true;
+    # };
 
     xserver = {
       enable = true;
       displayManager.startx.enable = true;
 
-      # windowManager.i3 = {
-      #   enable = true;
-      #   package = pkgs.i3-gaps;
-      # };
-      # Configure keymap in X11
       xkb = {
         layout = "us";
         options = "eurosign:e,caps:escape";
       };
     };
-    # Enable CUPS to print documents.
     printing.enable = true;
+    power-profiles-daemon.enable = true;
 
     pipewire = {
       enable = true;
       pulse.enable = true;
     };
-
     libinput.enable = true;
     openssh.enable = true;
     blueman.enable = true;
+    fwupd.enable = true;
   };
 
-  # security = {
-  #   rtkit.enable = true;
-  # };
+  security = {
+    polkit.enable = true;
+    rtkit.enable = true;
+  };
   
   # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.m0ar = {
-    isNormalUser = true;
-    extraGroups = [
-      "wheel"
-      "networkmanager"
-      "audio"
-    ];
+  users = {
+    defaultUserShell = "/etc/profiles/per-user/m0ar/bin/zsh";
+    users.m0ar = {
+      isNormalUser = true;
+      extraGroups = [
+        "wheel"
+        "networkmanager"
+        "audio"
+      ];
+    };
+
   };
 
-  home-manager.users.m0ar = import ./home.nix;
+  home-manager = {
+    users.m0ar = import ./home.nix;
+    useGlobalPkgs = true;
+    useUserPackages = true;
+    extraSpecialArgs = { inherit inputs; };
+  };
 
   programs.firefox.enable = true;
 
@@ -128,6 +145,7 @@
     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     wget
     dconf
+    linux-firmware
   ];
 
   # Some programs need SUID wrappers, can be configured further or are

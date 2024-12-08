@@ -18,5 +18,5 @@
     "ctrl+tab" = "no_op";
     "ctrl+shift+tab" = "no_op";
   };
-  theme = "One Dark";
+  themeFile = "OneDark";
 }

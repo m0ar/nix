@@ -1,8 +1,8 @@
 { pkgs, ... }:
 {
   enable = true;
-  extensionPackages = with pkgs; [ mopidy-spotify mopidy-mpd mopidy-mpris ];
-  extraConfigFiles = [ ~/.config/mopidy/spotify.conf ];
+  extensionPackages = with pkgs; [ mopidy-mpd mopidy-mpris ];
+  # extraConfigFiles = [ ~/.config/mopidy/spotify.conf ];
   settings = {
     file = {
       media_dirs = [

@@ -55,12 +55,11 @@
       nixosConfigurations.blep = server;
       nixosConfigurations.xin = nixpkgs.lib.nixosSystem {
         inherit system;
-        specialArgs = { inherit inputs; };
+        specialArgs = { inherit inputs; m0ar = homeConfigurations.m0ar; };
         modules = [
           ./xin.nix
           nixos-hardware.nixosModules.framework-13-7040-amd
           home-manager.nixosModules.home-manager
-          { home-manager = { useGlobalPkgs = true; useUserPackages = true; extraSpecialArgs = { inherit inputs; }; }; }
           { nixpkgs.overlays = [ nixgl.overlay ] ++ icetan-overlay.overlays.default; }
         ];
       };

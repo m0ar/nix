@@ -46,7 +46,7 @@
       source <(ipfs commands completion zsh)
     fi
 
-    if command -v kubecolor > /dev/null; then
+    if command -v kubecolor > /dev/null && command -v kubectl > /dev/null; then
       compdef kubecolor=kubectl
     fi
 

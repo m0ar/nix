@@ -74,6 +74,8 @@ in rec {
       yq
       mktorrent
       rsync
+      xorg.xev
+      zoom-us
 
       # make dependencies of pixlock script
       scrot
@@ -106,7 +108,7 @@ in rec {
 
       # fonts
       fontconfig
-      (nerdfonts.override { fonts = [ "NerdFontsSymbolsOnly" ]; })
+      nerd-fonts.symbols-only
       noto-fonts-color-emoji
       fira-code
       font-awesome_4
