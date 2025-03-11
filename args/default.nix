@@ -12,6 +12,7 @@ let
     poetry2nix = inputs.poetry2nix.lib.mkPoetry2Nix { inherit pkgs; };
 
     autorandr = import ./autorandr args;
+    beets = import ./beets.nix args;
     chromium = import ./chromium.nix args;
     dunst = import ./dunst args;
     flameshot = import ./flameshot args;
