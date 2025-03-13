@@ -39,6 +39,14 @@
     };
   };
   extraConfig = {
+    url = {
+      "git@github.com:" = {
+        insteadOf = [
+          "https://github.com/"
+          "git+https://github.com/"
+        ];
+      };
+    };
     diff = {
       colorMoved = "default";
     };
