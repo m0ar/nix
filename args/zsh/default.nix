@@ -57,6 +57,10 @@
     if command -v cpk > /dev/null; then
       source <(cpk completion zsh)
     fi
+
+    if command -v pnpm > /dev/null; then
+      source <(pnpm completion zsh)
+    fi
   '';
   envExtra = builtins.readFile ./env.zsh;
   profileExtra = builtins.readFile ./profile.zsh;

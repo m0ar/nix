@@ -22,6 +22,7 @@ in
         cursorline = true;
         auto-save = false;
         completion-replace = false;
+        # trim-trailing-whitespace = true;
         color-modes = true;
         bufferline = "always";
         # rulers = [ 80 100 ];
@@ -72,6 +73,11 @@ in
         lsp = {
           display-messages = true;
           display-inlay-hints = false;
+        };
+        end-of-line-diagnostics = "hint";
+        inline-diagnostics = {
+          cursor-line = "warning";
+          other-lines = "error";
         };
         file-picker = {
           hidden = false;

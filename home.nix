@@ -10,7 +10,7 @@ let
   inherit (args) pubkey x zsh kitty rofi git tmux
     scripts dunst polybar ssh autorandr helix lsd
     flameshot gtk harlequin mpdris2 ncmpcpp
-    mopidy;
+    mopidy rbw;
 in rec {
   targets.genericLinux.enable = true;
   nixpkgs.config = {
@@ -75,6 +75,9 @@ in rec {
       yq
       mktorrent
       rsync
+      rofi-rbw-x11
+      svtplay-dl
+      localsend
 
       # make dependencies of pixlock script
       scrot
@@ -82,6 +85,7 @@ in rec {
       # programming
       terraform
       kubectl
+      kubectl-node-shell
       kubecolor
       safe
       krew
@@ -94,19 +98,20 @@ in rec {
       jdk11
       gh
       maven
-      rustc
+      # rustc # better with rustup on OS
       jetbrains.idea-ultimate
+      dbeaver-bin
+      pnpm_10
 
       # graphical
       audacity
       obsidian
       slack
-      discord
       xcolor
 
       # fonts
       fontconfig
-      (nerdfonts.override { fonts = [ "NerdFontsSymbolsOnly" ]; })
+      nerd-fonts.symbols-only
       noto-fonts-color-emoji
       fira-code
       font-awesome_4
@@ -116,7 +121,7 @@ in rec {
     ] ++ builtins.attrValues scripts ++ builtins.attrValues helix.languageServers;
 
   programs = {
-    inherit zsh kitty tmux rofi ssh autorandr lsd ncmpcpp;
+    inherit zsh kitty tmux rofi ssh autorandr lsd ncmpcpp rbw;
     helix = helix.program;
     git = git {
       allowedSignersFile = home.file.sshAllowedSigners.target;

@@ -159,6 +159,7 @@ in {
           "--release ${modifier}+Shift+Return" = "exec ${pixlock}";
           "--release ${modifier}+space" =
             "exec ${config.programs.rofi.finalPackage}/bin/rofi -show combi";
+          "--release ${modifier}+Shift+l" = "exec ${pkgs.rofi-rbw}";
         };
       startup =
         builtins.map (as: as // { notification = false; }) [

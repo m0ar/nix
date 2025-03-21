@@ -7,6 +7,13 @@
     rofi-systemd
     rofi-emoji
     rofi-power-menu
+    rofi-bluetooth
+    (rofi-file-browser.overrideAttrs  {
+      env.NIX_CFLAGS_COMPILE = toString [
+        "-Wno-incompatible-pointer-types"
+      ];
+    })
+    rofi-systemd
   ];
   pass = {
     enable = true;

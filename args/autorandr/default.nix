@@ -10,7 +10,7 @@
           office)
             XMODMAP_CONFIG=$HOME/.Xmodmap_split
             ;;
-          laptop)
+          *)
             XMODMAP_CONFIG=$HOME/.Xmodmap
             ;;
         esac
