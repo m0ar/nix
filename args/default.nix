@@ -1,16 +1,18 @@
 { inputs
 , pkgs
+, isNixOS
 # home-manager meta
 , lib
 , config
 }:
 let
   args = {
-    inherit args pkgs lib config;
+    inherit args pkgs lib config isNixOS;
     inherit (inputs) zshPure kak-one kak-rainbower;
     poetry2nix = inputs.poetry2nix.lib.mkPoetry2Nix { inherit pkgs; };
 
     autorandr = import ./autorandr args;
+    chromium = import ./chromium.nix args;
     dunst = import ./dunst args;
     flameshot = import ./flameshot args;
     git = import ./git.nix args;

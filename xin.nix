@@ -5,11 +5,11 @@
     ./xin-hardware.nix
   ];
 
-  nixpkgs = {
-    config = {
-      allowUnfree = true;
-    };
-  };
+  # nixpkgs = {
+  #   config = {
+  #     allowUnfree = true;
+  #   };
+  # };
 
   hardware = {
     bluetooth = {
@@ -41,9 +41,28 @@
       };
     };
     loader = {
-      systemd-boot.enable = true;
-      efi.canTouchEfiVariables = true;
+      grub = {
+        enable = true;
+        efiSupport = true;
+        device = "nodev"; 
+        useOSProber = true;
+        copyKernels = true;
+        configurationLimit = 2;
+      };
+      efi = {
+        canTouchEfiVariables = true;
+        efiSysMountPoint = "/boot";
+      };
     };
+  };
+
+  systemd = {
+    sleep.extraConfig = ''
+      AllowSuspend=yes
+      AllowHibernation=yes
+      AllowHybridSleep
+      AllowSuspendThenHibernate=yes
+    '';
   };
 
   fileSystems = {
@@ -132,12 +151,12 @@
 
   };
 
-  home-manager = {
-    users.m0ar = import ./home.nix;
-    useGlobalPkgs = true;
-    useUserPackages = true;
-    extraSpecialArgs = { inherit inputs; };
-  };
+  # home-manager = {
+  #   users.m0ar = m0ar;
+  #   # useGlobalPkgs = true;
+  #   useUserPackages = true;
+  #   extraSpecialArgs = { inherit inputs; };
+  # };
 
   programs.firefox.enable = true;
 

@@ -1,4 +1,13 @@
-{ ... }:
+{ 
+  isNixOS ? false,
+  ...
+}:
+let
+  # Should probably check the configuration name instead
+  devices = if isNixOS
+    then { battery = "BAT1"; adapter = "ACAD"; }
+    else { battery = "BAT0"; adapter = "ADP1"; };
+in
 {
   enable = true;
   script = "polybar top &";
@@ -149,9 +158,10 @@
 
     "module/battery" = {
       type = "internal/battery";
-      battery = "BAT0";
-      adapter = "ADP1";
-      full.at = 92;
+      battery = devices.battery;
+      adapter = devices.adapter;
+
+      full.at = if isNixOS then 99 else 90;
       low.at = 15;
       poll.interval = 5;
 

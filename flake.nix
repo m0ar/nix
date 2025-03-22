@@ -29,6 +29,10 @@
       system = "x86_64-linux";
       pkgs = import nixpkgs {
         inherit system;
+        config = {
+          allowUnfree = true;
+          allowBroken = true;
+        };
         overlays = [ nixgl.overlay ] ++ icetan-overlay.overlays.default;
       };
       server = nixpkgs.lib.nixosSystem {
@@ -36,7 +40,7 @@
         specialArgs = { inherit inputs; };
         modules = [ ./server.nix ];
       };
-    in rec {
+    in {
       homeConfigurations = {
         m0ar = home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
@@ -54,13 +58,23 @@
       };
       nixosConfigurations.blep = server;
       nixosConfigurations.xin = nixpkgs.lib.nixosSystem {
-        inherit system;
-        specialArgs = { inherit inputs; m0ar = homeConfigurations.m0ar; };
+        inherit system pkgs;
+        specialArgs = { inherit inputs; };
         modules = [
           ./xin.nix
           nixos-hardware.nixosModules.framework-13-7040-amd
           home-manager.nixosModules.home-manager
-          { nixpkgs.overlays = [ nixgl.overlay ] ++ icetan-overlay.overlays.default; }
+          {
+            home-manager = {
+              users.m0ar.imports = [ ./home.nix ];
+              extraSpecialArgs = {
+                inherit inputs;
+                isNixOS = true;
+              };
+              useUserPackages = true;
+              useGlobalPkgs = true;
+            };
+          }
         ];
       };
       vms.blep = server.config.system.build.vm;

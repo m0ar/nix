@@ -1,24 +1,22 @@
 { pkgs
 , inputs
+, isNixOS ? false
 # home-manager meta
 , lib
 , config
 , ...
 }:
 let
-  args = import ./args { inherit config pkgs lib inputs; };
+  args = import ./args { inherit config pkgs lib inputs isNixOS; };
   inherit (args) pubkey x zsh kitty rofi git tmux
     scripts dunst polybar ssh autorandr helix lsd
     flameshot gtk harlequin mpdris2 ncmpcpp
-    mopidy;
+    mopidy chromium;
 in rec {
-  targets.genericLinux.enable = true;
-  nixpkgs.config = {
+  targets.genericLinux.enable = lib.mkIf (!isNixOS) true;
+  nixpkgs.config = lib.mkIf (!isNixOS) {
     allowUnfree = true;
     allowBroken = true;
-    permittedInsecurePackages = [
-      "nodejs-16.20.0"
-    ];
   };
   programs.home-manager.enable = true;
 
@@ -104,7 +102,6 @@ in rec {
       slack
       discord
       xcolor
-      brave
 
       # fonts
       fontconfig
@@ -118,7 +115,7 @@ in rec {
     ] ++ builtins.attrValues scripts ++ builtins.attrValues helix.languageServers;
 
   programs = {
-    inherit zsh kitty tmux rofi ssh autorandr lsd ncmpcpp;
+    inherit zsh kitty tmux rofi ssh autorandr lsd ncmpcpp chromium;
     helix = helix.program;
     git = git {
       allowedSignersFile = home.file.sshAllowedSigners.target;

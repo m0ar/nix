@@ -47,6 +47,7 @@
     fi
 
     if command -v kubecolor > /dev/null && command -v kubectl > /dev/null; then
+      source <(kubectl completion zsh)
       compdef kubecolor=kubectl
     fi
 
