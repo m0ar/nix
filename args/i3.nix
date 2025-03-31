@@ -5,7 +5,7 @@
 }:
 let
   pavol = "${scripts.pavol}/bin/pavol";
-  pixlock = "${scripts.pixlock}/bin/pixlock";
+  i3lock-fancy-rapid = "${pkgs.i3lock-fancy-rapid}/bin/i3lock-fancy-rapid";
   xbacklight = "${pkgs.acpilight}/bin/xbacklight";
   firaCode = {
     names = [ "Fira Code" ];
@@ -143,8 +143,7 @@ in {
       };
       keybindings = with pkgs;
         lib.mkOptionDefault {
-          "${modifier}+Return" =
-            "exec ${nixgl.nixGLIntel}/bin/nixGLIntel ${kitty}/bin/kitty";
+          "${modifier}+Return" = "exec ${kitty}/bin/kitty";
           "${modifier}+Shift+q" = "kill";
           "${modifier}+Ctrl+m" = "exec pavucontrol";
           "XF86AudioRaiseVolume" = "exec ${pavol} 5";
@@ -155,8 +154,8 @@ in {
           "XF86AudioPrev" = "exec playerctl previous";
           "XF86MonBrightnessUp" = "exec ${xbacklight} -inc 5";
           "XF86MonBrightnessDown" = "exec ${xbacklight} -dec 5";
-          "Print" = "exec ${nixgl.nixGLIntel}/bin/nixGLIntel flameshot gui";
-          "--release ${modifier}+Shift+Return" = "exec ${pixlock}";
+          "Print" = "exec flameshot gui";
+          "--release ${modifier}+Shift+Return" = "exec ${i3lock-fancy-rapid} 10 pixel";
           "--release ${modifier}+space" =
             "exec ${config.programs.rofi.finalPackage}/bin/rofi -show combi";
         };
@@ -175,9 +174,7 @@ in {
             command = "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1";
           }
           { command = "brave"; }
-          # { command = "obsidian"; }
-          # { command = "spotify"; }
-          { command = "xss-lock --transfer-sleep-lock -- ${pixlock} --nofork"; }
+          # { command = "xss-lock --transfer-sleep-lock -- ${i3lock-fancy-rapid}"; }
           { command = "blueman-applet"; }
         ];
       gaps = {
