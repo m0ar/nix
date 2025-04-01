@@ -9,6 +9,16 @@
   syntaxHighlighting.enable = true;
   # Group-writable store trips compinit security checks
   #completionInit = "autoload -U compinit && compinit -u";
+  history = {
+    extended = true;
+    append = true;
+    ignoreDups = true;
+    expireDuplicatesFirst = true;
+    ignoreSpace = true;
+    size = 1000000;
+    save = 1000000;
+    share = false;
+  };
   shellAliases = {
     # If alias replacement ends with a space, alias expansion is enabled on the following word
     sudo = "sudo --preserve-env=PATH,TERMINFO env ";
