@@ -2,6 +2,7 @@
 {
   enable = true;
   settings = {
+    # shellIntegration = false;
     date = "relative";
     ignore-globs = [
       ".git"

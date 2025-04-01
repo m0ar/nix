@@ -23,7 +23,7 @@
     # If alias replacement ends with a space, alias expansion is enabled on the following word
     sudo = "sudo --preserve-env=PATH,TERMINFO env ";
     cp = "cp -i";
-    ls = "ls --color=auto";
+    # ls = "ls --color=auto";
     nix = "noglob nix"; # nomatch handler doesn't like flake URIs
     curl = "noglob curl"; # nomatch handler doesn't like query params
     ip = "ip --color=auto";
