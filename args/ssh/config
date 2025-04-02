@@ -1,0 +1,29 @@
+
+Host aur.archlinux.org
+  User aur
+  IdentityFile ~/.ssh/aur
+
+Host mediacenter
+  User osmc
+  HostName 192.168.1.31
+  IdentityFile ~/.ssh/id_rsa
+
+Host router
+  Port 1234
+  User m0ar
+  HostName 192.168.1.1
+  IdentityFile ~/.ssh/id_rsa
+
+Host *
+  ForwardAgent no
+  AddKeysToAgent no
+  Compression no
+  ServerAliveInterval 0
+  ServerAliveCountMax 3
+  HashKnownHosts no
+  UserKnownHostsFile ~/.ssh/known_hosts
+  ControlMaster auto
+  ControlPath ~/.ssh/cm_socket/%r@%h:%p
+  ControlPersist no
+
+  Ciphers aes128-gcm@openssh.com,aes256-gcm@openssh.com,chacha20-poly1305@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr

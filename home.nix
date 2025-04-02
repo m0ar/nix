@@ -35,6 +35,10 @@ in rec {
       target = ".ssh/allowed_signers";
       text = programs.git.userEmail + " " + pubkey;
     };
+    ".ssh/config_source" = {
+      source = ./args/ssh/config;
+      onChange = ''cat ~/.ssh/config_source > ~/.ssh/config && chmod 400 ~/.ssh/config'';
+    };
   } // x.configFiles;
 
   xsession = x.session;
