@@ -24,6 +24,7 @@ let
     kitty = import ./kitty.nix args;
     lsd = import ./lsd args;
     ncmpcpp = import ./ncmpcpp.nix args;
+    nnn = import ./nnn.nix args;
     mopidy = import ./mopidy.nix args;
     mpdris2 = import ./mpdris2.nix args;
     polybar = import ./polybar args;
