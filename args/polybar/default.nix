@@ -48,8 +48,8 @@ in
 
       "font-0" = "Fira Code:size=10;2";
       "font-1" = "Noto Color Emoji:scale=13;2";
-      # "font-2" = "Symbols Nerd Font Mono:size=10;2";
-      "font-2" = "FontAwesome:size=10;2";
+      "font-2" = "Symbols Nerd Font Mono:size=10;2";
+      "font-3" = "FontAwesome:size=10;2";
 
       modules = {
         left = "xworkspaces xwindow";
