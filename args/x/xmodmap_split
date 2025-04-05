@@ -1,6 +1,8 @@
-clear Lock
-keycode 127 = aring Aring aring Aring
-keycode 66 = odiaeresis Odiaeresis odiaeresis Odiaeresis
-keycode 78 = adiaeresis Adiaeresis adiaeresis Adiaeresis
+! Map umlauts to RIGHT ALT + <key>
+! keycode 108 = Mode_switch
+! keysym a = a A adiaeresis Adiaeresis
+! keysym o = o O odiaeresis Odiaeresis
+! keysym u = u U udiaeresis Udiaeresis
 
-keycode 94 = backslash backslash
+! Map compose key to INSERT
+keycode 118 = Multi_key
