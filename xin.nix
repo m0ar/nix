@@ -34,10 +34,13 @@
 
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;
-    initrd.luks.devices = {
-      "cryptlvm" = {
-        device = "/dev/nvme0n1p6";
-        preLVM = true;
+    initrd = {
+      # kernelModules = [ "amdgpu" ];
+      luks.devices = {
+        "cryptlvm" = {
+          device = "/dev/nvme0n1p6";
+          preLVM = true;
+        };
       };
     };
     loader = {
@@ -45,9 +48,8 @@
         enable = true;
         efiSupport = true;
         device = "nodev"; 
-        useOSProber = true;
-        copyKernels = true;
-        configurationLimit = 2;
+        # useOSProber = true;
+        configurationLimit = 5;
       };
       efi = {
         canTouchEfiVariables = true;
