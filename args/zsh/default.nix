@@ -25,16 +25,16 @@
     cp = "cp -i";
     # ls = "ls --color=auto";
     nix = "noglob nix"; # nomatch handler doesn't like flake URIs
-    curl = "noglob curl"; # nomatch handler doesn't like query params
+    curl = "noglob curl "; # nomatch handler doesn't like query params
     ip = "ip --color=auto";
-    nvm = "fnm";
+    nvm = "fnm ";
     kubectl = "kubecolor";
     zshprofile = "time ZSH_DEBUGRC=1 zsh -i -c exit";
     #Search repos with 'paru' and 'fzf'
     parus = "paru -Slq | fzf --multi --preview 'paru -Si {1}' | xargs -ro paru -S";
     #Search locally installed packages with 'paru', 'fzf' and 'bat'
     parup = "paru -Qq | fzf --preview 'paru -Qil {}' --layout=reverse --bind 'enter:execute(paru -Qil {} | bat)'";
-
+    add_hp_printer = "NIXPKGS_ALLOW_UNFREE=1 nix-shell -p hplipWithPlugin --run 'sudo -E hp-setup'";
   };
   completionInit = ''
     # AWS autocomplete relies on bash completion being present
@@ -45,7 +45,7 @@
     compinit
 
     if command -v aws > /dev/null; then
-      complete -C "/usr/bin/aws_completer" aws
+      complete -C "aws_completer" aws
     fi
 
     if command -v fnm > /dev/null; then
@@ -68,6 +68,14 @@
     if command -v cpk > /dev/null; then
       source <(cpk completion zsh)
     fi
+
+    if command -v docker > /dev/null; then
+      source <(docker completion zsh)
+    fi
+
+    if command -v eksctl > /dev/null; then
+      source <(eksctl completion zsh)
+    fi
   '';
   envExtra = builtins.readFile ./env.zsh;
   profileExtra = builtins.readFile ./profile.zsh;
@@ -87,5 +95,5 @@
     if [ -n "$ZSH_DEBUGRC" ]; then
       zprof
     fi
-  ''; #+ builtins.readFile ./nvm.zsh;
+  '';
 }
