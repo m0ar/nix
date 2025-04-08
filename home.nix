@@ -46,6 +46,10 @@ in rec {
   
   xdg = {
     enable = true;
+    userDirs = {
+      enable = true;
+      createDirectories = true;
+    };
   };
 
   fonts.fontconfig.enable = true;
@@ -132,10 +136,11 @@ in rec {
   };
 
   services = {
-    inherit polybar flameshot mpdris2 mopidy;
+    inherit polybar flameshot mpdris2 mopidy dunst;
     playerctld.enable = true;
     pasystray.enable = true;
     network-manager-applet.enable = true;
     picom.enable = true;
+    udiskie.enable = true;
   };
 }
