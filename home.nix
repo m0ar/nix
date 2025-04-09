@@ -9,9 +9,9 @@
 let
   args = import ./args { inherit config pkgs lib inputs isNixOS; };
   inherit (args) pubkey x zsh kitty rofi git tmux
-    scripts dunst polybar ssh autorandr helix lsd
+    scripts dunst polybar autorandr helix lsd
     flameshot gtk harlequin mpdris2 ncmpcpp
-    mopidy chromium;
+    mopidy chromium nnn beets;
 in rec {
   targets.genericLinux.enable = lib.mkIf (!isNixOS) true;
   nixpkgs.config = lib.mkIf (!isNixOS) {
@@ -81,10 +81,10 @@ in rec {
       mktorrent
       rsync
       xorg.xev
-      zoom-us
-
-      # make dependencies of pixlock script
-      scrot
+      xorg.xkill
+      openssh
+      lsof
+      gnumake
 
       # programming
       terraform
@@ -103,6 +103,12 @@ in rec {
       maven
       rustc
       jetbrains.idea-ultimate
+      code-cursor
+      lens
+      awscli2
+      aws-iam-authenticator
+      pnpm_10
+      pgadmin4-desktopmode
 
       # graphical
       audacity
@@ -110,6 +116,14 @@ in rec {
       slack
       discord
       xcolor
+      telegram-desktop
+      zoom-us
+      mixxx
+      system-config-printer
+      simplescreenrecorder
+      vlc
+      vault-bin
+      inkscape
 
       # fonts
       fontconfig
@@ -120,10 +134,12 @@ in rec {
 
       # own packages
       harlequin
-    ] ++ builtins.attrValues scripts ++ builtins.attrValues helix.languageServers;
+      duckdb
+    ] ++ builtins.attrValues scripts ++ builtins.attrValues helix.languageServers ++ (if isNixOS then [
+      dbeaver-bin xorg.xmodmap spotify ] else []);
 
   programs = {
-    inherit zsh kitty tmux rofi ssh autorandr lsd ncmpcpp chromium;
+    inherit zsh kitty tmux rofi autorandr lsd ncmpcpp chromium nnn beets;
     helix = helix.program;
     git = git {
       allowedSignersFile = home.file.sshAllowedSigners.target;
