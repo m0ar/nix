@@ -5,16 +5,23 @@
     ./xin-hardware.nix
   ];
 
-  # nixpkgs = {
-  #   config = {
-  #     allowUnfree = true;
-  #   };
-  # };
-
   hardware = {
     bluetooth = {
       enable = true;
       powerOnBoot = true;
+    };
+    # HW graphics acceleration
+    graphics = {
+      enable = true;
+      enable32Bit = true;
+    };
+    display = {
+      edid = {
+        enable = true;
+        linuxhw = {
+          P32p-30 = [ "P32p-30" ];
+        };
+      };
     };
   };
 
@@ -114,8 +121,12 @@
 
     xserver = {
       enable = true;
+      exportConfiguration = true;
       displayManager.startx.enable = true;
-
+      videoDrivers = [ "amdgpu" ];
+      deviceSection = ''
+        Option "TearFree" "true"
+      '';
       xkb = {
         layout = "us";
         options = "eurosign:e,caps:escape";
@@ -132,6 +143,15 @@
     openssh.enable = true;
     blueman.enable = true;
     fwupd.enable = true;
+    fprintd.enable = true;
+    udev.extraRules = ''
+      # Allow video group users to manipulate backlight
+      ACTION=="add", SUBSYSTEM=="backlight", RUN+="${pkgs.coreutils}/bin/chgrp video $sys$devpath/brightness", RUN+="${pkgs.coreutils}/bin/chmod g+w $sys$devpath/brightness"
+
+      # Trigger autorandr on display changes
+      # TODO: need to fix cycle using epoch mtime in autorandr
+      ACTION=="change", SUBSYSTEM=="drm", RUN+="${pkgs.autorandr}/bin/autorandr --change"
+    '';
   };
 
   security = {
@@ -139,7 +159,6 @@
     rtkit.enable = true;
   };
   
-  # Define a user account. Don't forget to set a password with ‘passwd’.
   users = {
     defaultUserShell = "/etc/profiles/per-user/m0ar/bin/zsh";
     users.m0ar = {
@@ -148,9 +167,10 @@
         "wheel"
         "networkmanager"
         "audio"
+        "docker"
+        "video"
       ];
     };
-
   };
 
   # home-manager = {
@@ -167,6 +187,10 @@
     wget
     dconf
     linux-firmware
+    pciutils
+    hwdata
+    lshw
+    usbutils
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
