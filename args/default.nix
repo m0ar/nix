@@ -19,6 +19,7 @@ let
     git = import ./git.nix args;
     gtk = import ./gtk.nix args;
     harlequin = import ./harlequin.nix args;
+    duckdb = import ./duckdb.nix args;
     helix = import ./helix args;
     i3 = import ./i3.nix args;
     kitty = import ./kitty.nix args;
