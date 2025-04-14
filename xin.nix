@@ -230,6 +230,18 @@
   security = {
     polkit.enable = true;
     rtkit.enable = true;
+    # pam.services = {};
+  };
+
+  virtualisation = {
+    docker = {
+      enable = true;
+      enableOnBoot = false;
+      extraPackages = with pkgs; [ docker-credential-helpers ];
+      daemon.settings = {
+        userland-proxy = false;
+      };
+    };
   };
   
   users = {
