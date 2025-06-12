@@ -1,5 +1,4 @@
 { config, lib, pkgs, inputs, ... }:
-
 {
   imports = [
     ./xin-hardware.nix
@@ -94,7 +93,14 @@
     wireless.iwd.enable = true;
     networkmanager = {
       enable = true; 
-      wifi.backend = "iwd";
+      wifi = {
+        backend = "iwd";
+        powersave = true;
+      };
+      dispatcherScripts = [{
+        source = ../args/networkmanager/99-wifi-auto-toggle;
+        type = "basic";
+      }];
     };
     firewall.enable = false;
     hosts = {
@@ -171,8 +177,8 @@
             office = {
               enable = true;
               primary = true;
-              mode = "2560x1440";
-              # mode = "3840x2160";
+              # mode = "2560x1440";
+              mode = "3840x2160";
             };
           };
           hooks.postswitch.kb = ''
@@ -230,7 +236,9 @@
   security = {
     polkit.enable = true;
     rtkit.enable = true;
-    # pam.services = {};
+    pam.services = {
+      i3lock.enable = true;
+    };
   };
 
   virtualisation = {

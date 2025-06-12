@@ -35,10 +35,10 @@
         };
         overlays = [ nixgl.overlay ] ++ icetan-overlay.overlays.default;
       };
-      server = nixpkgs.lib.nixosSystem {
+      blep = nixpkgs.lib.nixosSystem {
         inherit system;
         specialArgs = { inherit inputs; };
-        modules = [ ./server.nix ];
+        modules = [ ./machines/blep.nix ];
       };
     in {
       homeConfigurations = {
@@ -48,20 +48,20 @@
           extraSpecialArgs = { inherit inputs; };
         };
 
-        osmc = home-manager.lib.homeManagerConfiguration {
+        mediacenter = home-manager.lib.homeManagerConfiguration {
           pkgs = import nixpkgs {
             system = "aarch64-linux";
           };
-          modules = [ ./osmc.nix ];
+          modules = [ ./machines/mediacenter.nix ];
           extraSpecialArgs = { inherit inputs; };
         };
       };
-      nixosConfigurations.blep = server;
+      nixosConfigurations.blep = blep;
       nixosConfigurations.xin = nixpkgs.lib.nixosSystem {
         inherit system pkgs;
         specialArgs = { inherit inputs; };
         modules = [
-          ./xin.nix
+          ./machines/xin.nix
           nixos-hardware.nixosModules.framework-13-7040-amd
           home-manager.nixosModules.home-manager
           {
@@ -77,6 +77,6 @@
           }
         ];
       };
-      vms.blep = server.config.system.build.vm;
+      vms.blep = blep.config.system.build.vm;
     };
 }
