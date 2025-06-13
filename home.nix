@@ -124,6 +124,9 @@ in rec {
       vlc
       vault-bin
       inkscape
+      signal-desktop
+      qbittorrent
+      arandr
 
       # fonts
       fontconfig
