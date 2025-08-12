@@ -164,17 +164,17 @@ in
         {
           name = "typescript";
           language-servers = [ "typescript-language-server" "eslint-lsp"];
-          roots = [ "package-lock.json" "yarn.lock" ] ++ eslintRcNames;
+          roots = [ "package-lock.json" "yarn.lock" ];
         }
         {
           name = "tsx";
           language-servers = [ "typescript-language-server" "eslint-lsp"];
-          roots = [ "package-lock.json" "yarn.lock" ] ++ eslintRcNames;
+          roots = [ "package-lock.json" "yarn.lock" ];
         }
         {
           name = "javascript";
           language-servers = [ "typescript-language-server" "eslint-lsp"];
-          roots = [ "package-lock.json" "yarn.lock" ] ++ eslintRcNames;
+          roots = [ "package-lock.json" "yarn.lock" ];
         }
       ];
       language-server = {

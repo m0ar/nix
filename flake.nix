@@ -19,11 +19,15 @@
       # inputs.nixpkgs.follows = "nixpkgs";
     };
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+    fenix = {
+      url = "github:nix-community/fenix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
     self, home-manager, nixgl, nixpkgs, utils,
-    zshPure, icetan-overlay, poetry2nix, nixos-hardware
+    zshPure, icetan-overlay, poetry2nix, nixos-hardware, fenix
   }@inputs:
     let
       system = "x86_64-linux";
@@ -33,7 +37,10 @@
           allowUnfree = true;
           allowBroken = true;
         };
-        overlays = [ nixgl.overlay ] ++ icetan-overlay.overlays.default;
+        overlays = [
+          nixgl.overlay
+          fenix.overlays.default
+        ] ++ icetan-overlay.overlays.default;
       };
       blep = nixpkgs.lib.nixosSystem {
         inherit system;

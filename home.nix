@@ -14,10 +14,14 @@ let
     mopidy chromium nnn beets;
 in rec {
   targets.genericLinux.enable = lib.mkIf (!isNixOS) true;
-  nixpkgs.config = lib.mkIf (!isNixOS) {
-    allowUnfree = true;
-    allowBroken = true;
+
+  nixpkgs = {
+    config = lib.mkIf (!isNixOS) {
+      allowUnfree = true;
+      allowBroken = true;
+    };
   };
+
   programs.home-manager.enable = true;
 
   home.stateVersion = "22.11";
@@ -101,7 +105,6 @@ in rec {
       jdk11
       gh
       maven
-      rustc
       jetbrains.idea-ultimate
       code-cursor
       lens
@@ -109,6 +112,18 @@ in rec {
       aws-iam-authenticator
       pnpm_10
       pgadmin4-desktopmode
+      gist
+      redisinsight
+      claude-code
+
+      # rust toolchain
+      (fenix.complete.withComponents [
+        "cargo"
+        "clippy"
+        "rust-src"
+        "rustc"
+        "rustfmt"
+      ])
 
       # graphical
       audacity
@@ -136,7 +151,7 @@ in rec {
       font-awesome_4
 
       # own packages
-      harlequin
+      # harlequin # broken dependencies
       duckdb
     ] ++ builtins.attrValues scripts ++ builtins.attrValues helix.languageServers ++ (if isNixOS then [
       dbeaver-bin xorg.xmodmap spotify ] else []);

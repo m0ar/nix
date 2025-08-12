@@ -62,7 +62,7 @@
     fi
 
     if command -v vault > /dev/null; then
-      complete -C /usr/bin/vault vault
+      complete -C $(which vault) vault
     fi
 
     if command -v cpk > /dev/null; then
