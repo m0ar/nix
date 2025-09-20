@@ -13,6 +13,7 @@ let
 
     autorandr = import ./autorandr args;
     beets = import ./beets.nix args;
+    cpk = import ./cpk.nix args;
     chromium = import ./chromium.nix args;
     dunst = import ./dunst args;
     flameshot = import ./flameshot args;

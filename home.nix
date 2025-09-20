@@ -11,7 +11,7 @@ let
   inherit (args) pubkey x zsh kitty rofi git tmux
     scripts dunst polybar autorandr helix lsd
     flameshot gtk harlequin mpdris2 ncmpcpp
-    mopidy chromium nnn beets;
+    mopidy chromium nnn beets cpk;
 in rec {
   targets.genericLinux.enable = lib.mkIf (!isNixOS) true;
 
@@ -151,6 +151,7 @@ in rec {
       font-awesome_4
 
       # own packages
+      cpk
       # harlequin # broken dependencies
       duckdb
     ] ++ builtins.attrValues scripts ++ builtins.attrValues helix.languageServers ++ (if isNixOS then [
