@@ -71,6 +71,19 @@
       AllowHybridSleep=yes
       AllowSuspendThenHibernate=yes
     '';
+    user.services.polkit-gnome-authentication-agent-1 = {
+      description = "polkit-gnome-authentication-agent-1";
+      wantedBy = [ "graphical-session.target" ];
+      wants = [ "graphical-session.target" ];
+      after = [ "graphical-session.target" ];
+      serviceConfig = {
+          Type = "simple";
+          ExecStart = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
+          Restart = "on-failure";
+          RestartSec = 1;
+          TimeoutStopSec = 10;
+        };
+    };
   };
 
   fileSystems = {
@@ -103,7 +116,7 @@
       }];
     };
     firewall = {
-      enable = true;
+      enable = false;
       # Open docker ports
       # extraCommands = ''
       #   iptables -I INPUT 1 -s 172.16.0.0/12 -p tcp -d 172.17.0.1 -j ACCEPT
@@ -252,7 +265,7 @@
     docker = {
       enable = true;
       enableOnBoot = false;
-      extraPackages = with pkgs; [ docker-credential-helpers ];
+      extraPackages = with pkgs; [ docker-credential-helpers docker-buildx ];
       # daemon.settings = {
       #   userland-proxy = false;
       # };
@@ -280,7 +293,7 @@
     };
     gnupg.agent = {
       enable = true;
-      enableSSHSupport = true;
+      enableSSHSupport = false;
     };
   };
 

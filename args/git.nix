@@ -3,42 +3,12 @@
 { allowedSignersFile }:
 {
   enable = true;
-  userName = "m0ar";
-  userEmail = "edvard@hubinette.me";
-  aliases = {
-    a = "add";
-    c = "commit";
-    d = "diff";
-    co = "checkout";
-    f = "fetch";
-    fap = "fetch --all --prune";
-    lol = "log --graph --decorate --pretty=oneline --abbrev-commit";
-    lola = "log --graph --decorate --pretty=oneline --abbrev-commit --all";
-    st = "status";
-    graf = ''
-      !git log \
-            --color \
-            --graph \
-            --pretty=format:"'%Cblue%h%Creset -%C(auto)%d%Creset %s %Cgreen(%cr)%C(bold blue) <%an> %Creset'" \
-            --abbrev-commit \
-            --all \
-            | sed 's|tag:||g'\
-            | sed 's|HEAD| head|g'\
-            | sed 's|origin/|  |g'\
-            | less -R
-    '';
-    root = "rev-parse --show-toplevel";
-  };
-  delta = {
-    enable = true;
-    options = {
-      dark = true;
-      navigate = true;
-      line-numbers = true;
-      hyperlinks = true;
+  settings = {
+    user = {
+      name = "m0ar";
+      email = "edvard@hubinette.me";
+      signingKey = pubkey;
     };
-  };
-  extraConfig = {
     url = {
       "git@github.com:" = {
         insteadOf = [
@@ -65,6 +35,29 @@
       format = "ssh";
       ssh = { allowedSignersFile = "~/" + allowedSignersFile; };
     };
-    user = { signingKey = pubkey; };
+    alias = {
+      a = "add";
+      c = "commit";
+      d = "diff";
+      co = "checkout";
+      f = "fetch";
+      fap = "fetch --all --prune";
+      lol = "log --graph --decorate --pretty=oneline --abbrev-commit";
+      lola = "log --graph --decorate --pretty=oneline --abbrev-commit --all";
+      st = "status";
+      graf = ''
+        !git log \
+              --color \
+              --graph \
+              --pretty=format:"'%Cblue%h%Creset -%C(auto)%d%Creset %s %Cgreen(%cr)%C(bold blue) <%an> %Creset'" \
+              --abbrev-commit \
+              --all \
+              | sed 's|tag:||g'\
+              | sed 's|HEAD| head|g'\
+              | sed 's|origin/|  |g'\
+              | less -R
+      '';
+      root = "rev-parse --show-toplevel";
+    };
   };
 }

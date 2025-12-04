@@ -1,6 +1,7 @@
 { pkgs
 , config
 , scripts
+, terminal_bin
 , ...
 }:
 let
@@ -143,12 +144,11 @@ in {
       };
       keybindings = with pkgs;
         lib.mkOptionDefault {
-          "${modifier}+Return" = "exec ${kitty}/bin/kitty";
+          "${modifier}+Return" = "exec ${terminal_bin}";
           "${modifier}+Shift+q" = "kill";
-          "${modifier}+Ctrl+m" = "exec pavucontrol";
-          "XF86AudioRaiseVolume" = "exec ${pavol} 5";
-          "XF86AudioLowerVolume" = "exec ${pavol} -5";
-          "XF86AudioMute" = "exec pactl set-sink-mute 0 toggle";
+          "XF86AudioRaiseVolume" = "exec wpctl set-volume --limit 1.0 @DEFAULT_SINK@ .05+";
+          "XF86AudioLowerVolume" = "exec wpctl set-volume --limit 1.0 @DEFAULT_SINK@ .05-";
+          "XF86AudioMute" = "exec wpctl set-mute @DEFAULT_SINK@ toggle";
           "XF86AudioPlay" = "exec playerctl play-pause";
           "XF86AudioNext" = "exec playerctl next";
           "XF86AudioPrev" = "exec playerctl previous";

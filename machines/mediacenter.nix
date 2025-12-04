@@ -28,7 +28,7 @@ in rec {
   home.file = {
     sshAllowedSigners = {
       target = ".ssh/allowed_signers";
-      text = programs.git.userEmail + " " + pubkey;
+      text = programs.git.settings.user.email + " " + pubkey;
     };
   };
   

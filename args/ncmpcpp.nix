@@ -1,7 +1,7 @@
 { ... }:
 {
   enable = true;
-  mpdMusicDir = "~/Music";
+  mpdMusicDir = "~/Music/raw";
   settings = {
     mpd_host = "127.0.0.1";
     mpd_port = "6600";

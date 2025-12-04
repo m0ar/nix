@@ -1,14 +1,34 @@
-{ zshPure
-, ...
-}:
+{ pkgs, cpk, ... }:
+let
+  # Define completions to generate at build time
+  zshCompletionSpecs = [
+    { name = "kubectl"; pkg = pkgs.kubectl; cmd = "kubectl completion zsh"; }
+    { name = "docker"; pkg = pkgs.docker-client; cmd = "docker completion zsh"; }
+    { name = "fnm"; pkg = pkgs.fnm; cmd = "fnm completions --shell zsh"; }
+    { name = "kubo"; pkg = pkgs.kubo; cmd = "ipfs commands completion zsh"; }
+    { name = "eksctl"; pkg = pkgs.eksctl; cmd = "eksctl completion zsh"; }
+    { name = "pnpm"; pkg = pkgs.pnpm_10; cmd = "pnpm completion zsh"; }
+    { name = "gh"; pkg = pkgs.gh; cmd = "gh completion -s zsh"; }
+    { name = "cpk"; pkg = cpk; cmd = "cpk completion zsh"; }
+  ];
+
+  # Generate a completion script at build time
+  mkZshCompletion = { name, pkg, cmd }:
+    pkgs.runCommand "${name}-zsh-completion" { nativeBuildInputs = [ pkg ]; } ''
+      ${cmd} > $out
+    '';
+
+  # Generate source lines for all completions
+  completionSources = builtins.concatStringsSep "\n"
+    (map (spec: "source ${mkZshCompletion spec}") zshCompletionSpecs);
+
+in
 {
   enable = true;
   autosuggestion.enable = true;
   enableVteIntegration = true;
   autocd = true;
   syntaxHighlighting.enable = true;
-  # Group-writable store trips compinit security checks
-  #completionInit = "autoload -U compinit && compinit -u";
   history = {
     extended = true;
     append = true;
@@ -37,45 +57,22 @@
     add_hp_printer = "NIXPKGS_ALLOW_UNFREE=1 nix-shell -p hplipWithPlugin --run 'sudo -E hp-setup'";
   };
   completionInit = ''
-    # AWS autocomplete relies on bash completion being present
+    # AWS/vault autocomplete relies on bash completion
     autoload bashcompinit
     bashcompinit
 
     autoload -Uz compinit
     compinit
 
-    if command -v aws > /dev/null; then
-      complete -C "aws_completer" aws
-    fi
+    # Pre-generated completions (built at nix build time, no subprocess spawning)
+    ${completionSources}
 
-    if command -v fnm > /dev/null; then
-      source <(fnm completions --shell zsh)
-    fi
+    # kubecolor uses kubectl completions
+    compdef kubecolor=kubectl
 
-    if command -v ipfs > /dev/null; then
-      source <(ipfs commands completion zsh)
-    fi
-
-    if command -v kubecolor > /dev/null && command -v kubectl > /dev/null; then
-      source <(kubectl completion zsh)
-      compdef kubecolor=kubectl
-    fi
-
-    if command -v vault > /dev/null; then
-      complete -C $(which vault) vault
-    fi
-
-    if command -v cpk > /dev/null; then
-      source <(cpk completion zsh)
-    fi
-
-    if command -v docker > /dev/null; then
-      source <(docker completion zsh)
-    fi
-
-    if command -v eksctl > /dev/null; then
-      source <(eksctl completion zsh)
-    fi
+    # Bash-style completions (these use complete -C, not zsh scripts)
+    complete -C "${pkgs.awscli2}/bin/aws_completer" aws
+    complete -C "${pkgs.vault-bin}/bin/vault" vault
   '';
   envExtra = builtins.readFile ./env.zsh;
   profileExtra = builtins.readFile ./profile.zsh;
@@ -85,13 +82,6 @@
     fi
   '';
   initExtra = builtins.readFile ./init.zsh + ''
-    fpath+=(${zshPure})
-    autoload -U promptinit; promptinit
-    prompt pure
-    zstyle :prompt:pure:prompt:success color "#ff6ac1"
-    zstyle :prompt:pure:prompt:error color "#be5046"
-    zstyle :prompt:pure:git:stash show yes
-
     if [ -n "$ZSH_DEBUGRC" ]; then
       zprof
     fi

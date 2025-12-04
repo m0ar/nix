@@ -8,15 +8,17 @@
 let
   args = {
     inherit args pkgs lib config isNixOS;
-    inherit (inputs) zshPure kak-one kak-rainbower;
     poetry2nix = inputs.poetry2nix.lib.mkPoetry2Nix { inherit pkgs; };
+    palette = import ./palette.nix;
 
     autorandr = import ./autorandr args;
     beets = import ./beets.nix args;
     cpk = import ./cpk.nix args;
     chromium = import ./chromium.nix args;
+    delta = import ./delta.nix args;
     dunst = import ./dunst args;
     flameshot = import ./flameshot args;
+    ghostty = import ./ghostty.nix args;
     git = import ./git.nix args;
     gtk = import ./gtk.nix args;
     harlequin = import ./harlequin.nix args;
@@ -34,8 +36,11 @@ let
     rofi = import ./rofi.nix args;
     scripts = import ./scripts args;
     ssh = import ./ssh args;
+    starship = import ./starship.nix args;
+    terminal_bin = "${pkgs.ghostty}/bin/ghostty";
     tmux = import ./tmux args;
     x = import ./x args;
+    zed-editor = import ./zed.nix args;
     zsh = import ./zsh args;
   };
 in args

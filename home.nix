@@ -9,9 +9,9 @@
 let
   args = import ./args { inherit config pkgs lib inputs isNixOS; };
   inherit (args) pubkey x zsh kitty rofi git tmux
-    scripts dunst polybar autorandr helix lsd
+    scripts dunst polybar autorandr helix lsd ghostty
     flameshot gtk harlequin mpdris2 ncmpcpp
-    mopidy chromium nnn beets cpk;
+    mopidy chromium nnn beets cpk zed-editor delta starship;
 in rec {
   targets.genericLinux.enable = lib.mkIf (!isNixOS) true;
 
@@ -37,7 +37,7 @@ in rec {
   home.file = {
     sshAllowedSigners = {
       target = ".ssh/allowed_signers";
-      text = programs.git.userEmail + " " + pubkey;
+      text = programs.git.settings.user.email + " " + pubkey;
     };
     ".ssh/config_source" = {
       source = ./args/ssh/config;
@@ -89,11 +89,20 @@ in rec {
       openssh
       lsof
       gnumake
+      gcc
+      pkg-config
+      openssl
+      protobuf
+      p7zip
 
       # programming
       terraform
+      # python313Full
+      # python313Packages.setuptools
+      # python313Packages.distutils
       kubectl
       kubecolor
+      kubectl-node-shell
       safe
       krew
       diffoci
@@ -115,6 +124,11 @@ in rec {
       gist
       redisinsight
       claude-code
+      act # github actions runner, nektos/act
+      pqrs # parquet tools
+      difftastic
+      lazygit
+      postgresql
 
       # rust toolchain
       (fenix.complete.withComponents [
@@ -128,21 +142,26 @@ in rec {
       # graphical
       audacity
       obsidian
-      slack
       discord
       xcolor
-      telegram-desktop
-      zoom-us
       mixxx
       system-config-printer
       simplescreenrecorder
       vlc
       vault-bin
       inkscape
-      signal-desktop
       qbittorrent
       arandr
+      mandelbulber
+      tor-browser
+      gpa
 
+      # social
+      slack
+      telegram-desktop
+      zoom-us
+      signal-desktop
+      
       # fonts
       fontconfig
       nerd-fonts.symbols-only
@@ -158,13 +177,13 @@ in rec {
       dbeaver-bin xorg.xmodmap spotify ] else []);
 
   programs = {
-    inherit zsh kitty tmux rofi autorandr lsd ncmpcpp chromium nnn beets;
+    inherit zsh kitty tmux rofi autorandr lsd ncmpcpp chromium nnn beets zed-editor delta ghostty starship;
     helix = helix.program;
     git = git {
       allowedSignersFile = home.file.sshAllowedSigners.target;
     };
     direnv.enable = true;
-    keychain.enable = true;
+    # keychain.enable = true;
     jq.enable = true;
     fzf.enable = true;
     ripgrep.enable = true;
@@ -177,5 +196,6 @@ in rec {
     network-manager-applet.enable = true;
     picom.enable = true;
     udiskie.enable = true;
+    ssh-agent.enable = true;
   };
 }

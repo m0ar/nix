@@ -4,19 +4,13 @@
   inputs = {
     utils.url = "github:numtide/flake-utils";
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
-    icetan-overlay.url = "github:icetan/nixpkgs-overlay";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nixgl.url = "github:guibou/nixGL";
-    zshPure = {
-      url = "github:sindresorhus/pure";
-      flake = false;
-    };
     poetry2nix = {
       url = "github:nix-community/poetry2nix";
-      # inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     fenix = {
@@ -26,8 +20,8 @@
   };
 
   outputs = {
-    self, home-manager, nixgl, nixpkgs, utils,
-    zshPure, icetan-overlay, poetry2nix, nixos-hardware, fenix
+    self, home-manager, nixpkgs, utils,
+    poetry2nix, nixos-hardware, fenix
   }@inputs:
     let
       system = "x86_64-linux";
@@ -38,9 +32,8 @@
           allowBroken = true;
         };
         overlays = [
-          nixgl.overlay
           fenix.overlays.default
-        ] ++ icetan-overlay.overlays.default;
+        ];
       };
       blep = nixpkgs.lib.nixosSystem {
         inherit system;

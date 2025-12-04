@@ -1,13 +1,14 @@
 { pkgs
 , config
-, ... 
+, palette
+, ...
 }:
 let
   languageServers = {
-    inherit (pkgs) elixir_ls gopls marksman terraform-ls nil shellcheck kotlin-language-server rust-analyzer;
+    inherit (pkgs) elixir-ls gopls marksman terraform-ls nil shellcheck kotlin-language-server rust-analyzer dockerfile-language-server;
     elm-language-server = pkgs.elmPackages.elm-language-server;
     python-lsp-server = pkgs.python311Packages.python-lsp-server;
-    inherit (pkgs.nodePackages) typescript-language-server vscode-langservers-extracted bash-language-server yaml-language-server dockerfile-language-server-nodejs eslint;
+    inherit (pkgs.nodePackages) typescript-language-server vscode-langservers-extracted bash-language-server yaml-language-server;
   };
   eslintRcNames = [ ".eslintrc" ".eslintrc.js" ".eslintrc.cjs" ".eslintrc.json" ];
 in
@@ -15,8 +16,11 @@ in
   program = {
     enable = true;
     defaultEditor = true;
+    themes = {
+      my-onedark = import ./onedark-theme.nix palette.default;
+    };
     settings = {
-      theme = "onedark";
+      theme = "my-onedark";
       editor = {
         line-number = "relative";
         cursorline = true;
@@ -102,6 +106,24 @@ in
           D = [ "extend_to_line_end" "change_selection" ];
           C-tab = ":buffer-previous";
           C-S-tab = ":buffer-next";
+          # https://github.com/helix-editor/helix/discussions/12045
+          # https://gist.github.com/gloaysa/828707f067e3bb20da18d72fa5d4963a
+          C-g = [
+              ":write-all"
+              ":new"
+              ":insert-output lazygit"
+              ":set mouse false"
+              ":set mouse true"
+              ":buffer-close!"
+              ":redraw"
+              ":reload-all"
+              # ":write-all"
+              # ":new"
+              # ":insert-output lazygit"
+              # ":buffer-close!"
+              # ":redraw"
+              # ":reload-all"
+          ];
           esc = [ "collapse_selection" "keep_primary_selection" ];
           tab = "goto_next_function";
           S-tab = "goto_prev_function";
@@ -164,17 +186,30 @@ in
         {
           name = "typescript";
           language-servers = [ "typescript-language-server" "eslint-lsp"];
-          roots = [ "package-lock.json" "yarn.lock" ];
+          formatter = { command = "npx"; args = [ "prettier" "--parser" "typescript" ]; };
+          auto-format = true;
+          roots = [ "package.json" "package-lock.json" "yarn.lock" "pnpm-lock.yaml" "bun.lockb" "tsconfig.json" ".git" "lerna.json" "nx.json" "rush.json" ];
         }
         {
           name = "tsx";
           language-servers = [ "typescript-language-server" "eslint-lsp"];
-          roots = [ "package-lock.json" "yarn.lock" ];
+          formatter = { command = "npx"; args = [ "prettier" "--parser" "typescript" ]; };
+          auto-format = true;
+          roots = [ "package.json" "package-lock.json" "yarn.lock" "pnpm-lock.yaml" "bun.lockb" "tsconfig.json" ".git" "lerna.json" "nx.json" "rush.json" ];
         }
         {
           name = "javascript";
           language-servers = [ "typescript-language-server" "eslint-lsp"];
-          roots = [ "package-lock.json" "yarn.lock" ];
+          formatter = { command = "npx"; args = [ "prettier" "--parser" "babel" ]; };
+          auto-format = true;
+          roots = [ "package.json" "package-lock.json" "yarn.lock" "pnpm-lock.yaml" "bun.lockb" "tsconfig.json" "jsconfig.json" ".git" "lerna.json" "nx.json" "rush.json" ];
+        }
+        {
+          name = "jsx";
+          language-servers = [ "typescript-language-server" "eslint-lsp"];
+          formatter = { command = "npx"; args = [ "prettier" "--parser" "babel" ]; };
+          auto-format = true;
+          roots = [ "package.json" "package-lock.json" "yarn.lock" "pnpm-lock.yaml" "bun.lockb" "tsconfig.json" "jsconfig.json" ".git" "lerna.json" "nx.json" "rush.json" ];
         }
       ];
       language-server = {
@@ -195,7 +230,6 @@ in
                includeInlayParameterNameHintsWhenArgumentMatchesName = true;
                includeInlayPropertyDeclarationTypeHints = true;
                includeInlayVariableTypeHints = true;
-              };
             };
             javascript.inlayHints = {
               includeInlayEnumMemberValueHints = true;
@@ -207,34 +241,43 @@ in
               includeInlayVariableTypeHints = true;
             };
           };
-          eslint-lsp = with languageServers; {
-            command = "${vscode-langservers-extracted}/bin/eslint";
-            args = [ "--stdio" ];
-            required-root-patterns = [ "\.eslintrc(.*)?" ];
-            config = {
-              format = false;
-              nodePath = "";
-              onIgnoredFiles = "off";
-              validate = "on";
-              run = "onType";
-              quiet = false;
-              problems = { shortenToSingleLine = false; };
-              # experimental = { useFlatConfig = false };
-              rulesCustomizations = [];
-              workingDirectory = {
-                mode = "auto"; # alt. "location" ?
+        };
+        eslint-lsp = with languageServers; {
+          command = "${vscode-langservers-extracted}/bin/vscode-eslint-language-server";
+          args = [ "--stdio" ];
+          config = {
+            format = { enable = true; };
+            nodePath = "";
+            onIgnoredFiles = "off";
+            validate = "on";
+            run = "onType";
+            quiet = false;
+            problems = { shortenToSingleLine = false; };
+            experimental = { useFlatConfig = false; };
+            rulesCustomizations = [];
+            workingDirectory = {
+              mode = "auto";
+            };
+            codeAction = { 
+              disableRuleComment = { 
+                enable = true;
+                location = "separateLine";
               };
-              # useESLintClass = false; ?
-              # packageManager = "npm" ?
-              codeAction = { 
-                disableRuleComment = { 
-                  enable = true;
-                  location = "separateLine";
-                };
-                showDocumentation.enable = true;
-              };
+              showDocumentation.enable = true;
             };
           };
+          required-root-patterns = [ 
+            ".eslintrc.js" 
+            ".eslintrc.cjs" 
+            ".eslintrc.yaml" 
+            ".eslintrc.yml" 
+            ".eslintrc.json" 
+            ".eslintrc" 
+            "eslint.config.js" 
+            "eslint.config.mjs" 
+            "eslint.config.cjs"
+            "package.json"
+          ];
         };
       };
     };
@@ -299,6 +342,7 @@ in
       #  command = "tailwindcss-language-server"
       #  args = ["--stdio"]
       #  config = {}
+    };
 
   inherit languageServers;
 }
