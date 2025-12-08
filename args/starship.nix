@@ -14,12 +14,16 @@
       "$git_branch"
       "$git_commit"
       "$git_status"
-      "$cmd_duration"
       "$jobs"
-      "\n"
+      "$fill"
+      "$cmd_duration"
+      "\n" # prompt line below
       "$shlvl"
       "$character"
     ];
+    fill = {
+      symbol = " ";
+    };
     directory = {
       read_only = "";
       truncate_to_repo = false;
