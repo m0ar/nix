@@ -288,6 +288,7 @@
 
   programs = {
     firefox.enable = true;
+    dconf.enable = true;
     nix-ld = {
       enable = true;
     };

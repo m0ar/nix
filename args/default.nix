@@ -17,6 +17,7 @@ let
     chromium = import ./chromium.nix args;
     delta = import ./delta.nix args;
     dunst = import ./dunst args;
+    easyeffects = import ./easyeffects.nix args;
     flameshot = import ./flameshot args;
     ghostty = import ./ghostty.nix args;
     git = import ./git.nix args;

@@ -45,7 +45,7 @@
         m0ar = home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
           modules = [ ./home.nix ];
-          extraSpecialArgs = { inherit inputs; };
+          extraSpecialArgs = { inherit inputs; isNixOS = false; };
         };
 
         mediacenter = home-manager.lib.homeManagerConfiguration {

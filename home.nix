@@ -10,7 +10,7 @@ let
   args = import ./args { inherit config pkgs lib inputs isNixOS; };
   inherit (args) pubkey x zsh kitty rofi git tmux
     scripts dunst polybar autorandr helix lsd ghostty
-    flameshot gtk harlequin mpdris2 ncmpcpp
+    flameshot gtk harlequin mpdris2 ncmpcpp easyeffects
     mopidy chromium nnn beets cpk zed-editor delta starship;
 in rec {
   targets.genericLinux.enable = lib.mkIf (!isNixOS) true;
@@ -43,7 +43,7 @@ in rec {
       source = ./args/ssh/config;
       onChange = ''cat ~/.ssh/config_source > ~/.ssh/config && chmod 400 ~/.ssh/config'';
     };
-  } // x.configFiles;
+  } // x.configFiles // easyeffects.configFiles;
 
   xsession = x.session;
   inherit gtk;
@@ -120,7 +120,6 @@ in rec {
       awscli2
       aws-iam-authenticator
       pnpm_10
-      pgadmin4-desktopmode
       gist
       redisinsight
       claude-code
@@ -191,6 +190,7 @@ in rec {
 
   services = {
     inherit polybar flameshot mpdris2 mopidy dunst;
+    easyeffects = easyeffects.service;
     playerctld.enable = true;
     pasystray.enable = true;
     network-manager-applet.enable = true;
@@ -198,4 +198,5 @@ in rec {
     udiskie.enable = true;
     ssh-agent.enable = true;
   };
+
 }
