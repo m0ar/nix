@@ -128,6 +128,7 @@ in rec {
       difftastic
       lazygit
       postgresql
+      kind
 
       # rust toolchain
       (fenix.complete.withComponents [
@@ -167,6 +168,9 @@ in rec {
       noto-fonts-color-emoji
       fira-code
       font-awesome_4
+
+      # games
+      openrct2
 
       # own packages
       cpk
