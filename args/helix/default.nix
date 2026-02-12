@@ -7,7 +7,7 @@ let
   languageServers = {
     inherit (pkgs) elixir-ls gopls marksman terraform-ls nil shellcheck kotlin-language-server rust-analyzer dockerfile-language-server;
     elm-language-server = pkgs.elmPackages.elm-language-server;
-    python-lsp-server = pkgs.python311Packages.python-lsp-server;
+    python-lsp-server = pkgs.python313Packages.python-lsp-server;
     inherit (pkgs.nodePackages) typescript-language-server vscode-langservers-extracted bash-language-server yaml-language-server;
   };
   eslintRcNames = [ ".eslintrc" ".eslintrc.js" ".eslintrc.cjs" ".eslintrc.json" ];

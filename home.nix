@@ -129,6 +129,7 @@ in rec {
       lazygit
       postgresql
       kind
+      wrangler
 
       # rust toolchain
       (fenix.complete.withComponents [

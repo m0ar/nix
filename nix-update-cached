@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+FLAKE_DIR="${FLAKE_DIR:-$HOME/nix}"
+
+echo ":: Fetching nixos-unstable channel commit..."
+COMMIT=$(curl -sL "https://channels.nixos.org/nixos-unstable/git-revision")
+echo "   $COMMIT"
+
+echo ":: Updating flake.lock..."
+nix flake update --flake "$FLAKE_DIR" --override-input nixpkgs "github:nixos/nixpkgs/$COMMIT"
+
+echo ":: Building system..."
+sudo nixos-rebuild build --flake "$FLAKE_DIR" --impure
+
+echo
+read -p ":: Build succeeded. Switch to new configuration? [y/N] " -n 1 -r
+echo
+if [[ $REPLY =~ ^[Yy]$ ]]; then
+    sudo nixos-rebuild switch --flake "$FLAKE_DIR" --impure
+    echo ":: Switched successfully"
+else
+    echo ":: Skipped switch. Run manually:"
+    echo "   sudo nixos-rebuild switch --flake $FLAKE_DIR --impure"
+fi
