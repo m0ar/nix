@@ -1,4 +1,4 @@
-{ pkgs, cpk, ... }:
+{ pkgs, cpk, lib, config, ... }:
 let
   # Define completions to generate at build time
   zshCompletionSpecs = [
@@ -76,14 +76,17 @@ in
   '';
   envExtra = builtins.readFile ./env.zsh;
   profileExtra = builtins.readFile ./profile.zsh;
-  initExtraFirst = ''
-    if [ -n "$ZSH_DEBUGRC" ]; then
-      zmodload zsh/zprof
-    fi
-  '';
-  initExtra = builtins.readFile ./init.zsh + ''
-    if [ -n "$ZSH_DEBUGRC" ]; then
-      zprof
-    fi
-  '';
+  dotDir = "${config.xdg.configHome}/zsh";
+  initContent = lib.mkMerge [
+    (lib.mkBefore ''
+      if [ -n "$ZSH_DEBUGRC" ]; then
+        zmodload zsh/zprof
+      fi
+    '')
+    (builtins.readFile ./init.zsh + ''
+      if [ -n "$ZSH_DEBUGRC" ]; then
+        zprof
+      fi
+    '')
+  ];
 }

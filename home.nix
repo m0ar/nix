@@ -62,7 +62,7 @@ in rec {
       # meta
       nix-tree
       nix-du
-      nixfmt-classic
+      nixfmt
       nix-diff
       nix-index
 
@@ -114,7 +114,7 @@ in rec {
       jdk11
       gh
       maven
-      jetbrains.idea-ultimate
+      jetbrains.idea
       code-cursor
       lens
       awscli2
