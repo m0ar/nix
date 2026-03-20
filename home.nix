@@ -64,7 +64,6 @@ in rec {
       nix-du
       nixfmt
       nix-diff
-      nix-index
 
       # util
       btop
@@ -191,6 +190,11 @@ in rec {
     jq.enable = true;
     fzf.enable = true;
     ripgrep.enable = true;
+    nix-index = {
+      enable = true;
+      enableZshIntegration = true;
+      enableBashIntegration = true;
+    };
   };
 
   services = {

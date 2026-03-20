@@ -4,6 +4,10 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     utils.url = "github:numtide/flake-utils";
+    nix-index-database = {
+      url = "github:nix-community/nix-index-database";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -21,7 +25,7 @@
 
   outputs = {
     self, home-manager, nixpkgs, utils,
-    poetry2nix, nixos-hardware, fenix
+    poetry2nix, nixos-hardware, fenix, nix-index-database
   }@inputs:
     let
       system = "x86_64-linux";
@@ -44,7 +48,7 @@
       homeConfigurations = {
         m0ar = home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
-          modules = [ ./home.nix ];
+          modules = [ ./home.nix nix-index-database.homeModules.nix-index ];
           extraSpecialArgs = { inherit inputs; isNixOS = false; };
         };
 
@@ -52,7 +56,7 @@
           pkgs = import nixpkgs {
             system = "aarch64-linux";
           };
-          modules = [ ./machines/mediacenter.nix ];
+          modules = [ ./machines/mediacenter.nix nix-index-database.homeModules.nix-index ];
           extraSpecialArgs = { inherit inputs; };
         };
       };
@@ -66,7 +70,7 @@
           home-manager.nixosModules.home-manager
           {
             home-manager = {
-              users.m0ar.imports = [ ./home.nix ];
+              users.m0ar.imports = [ ./home.nix nix-index-database.homeModules.nix-index ];
               extraSpecialArgs = {
                 inherit inputs;
                 isNixOS = true;
