@@ -93,12 +93,12 @@ in rec {
       openssl
       protobuf
       p7zip
+      mediainfo
+      picard
+      psmisc
 
       # programming
       terraform
-      # python313Full
-      # python313Packages.setuptools
-      # python313Packages.distutils
       kubectl
       kubecolor
       kubectl-node-shell
@@ -107,7 +107,6 @@ in rec {
       diffoci
       k9s
       eksctl
-      # vault # suuper heavy build
       nodePackages.yarn
       kubo
       jdk11
@@ -116,6 +115,7 @@ in rec {
       jetbrains.idea
       code-cursor
       lens
+      freelens-bin
       awscli2
       aws-iam-authenticator
       pnpm_10
@@ -129,6 +129,10 @@ in rec {
       postgresql
       kind
       wrangler
+      sops
+      fluxcd
+      kustomize
+      kubernetes-helm
 
       # rust toolchain
       (fenix.complete.withComponents [
@@ -155,6 +159,8 @@ in rec {
       mandelbulber
       tor-browser
       gpa
+      nicotine-plus
+      teams-for-linux
 
       # social
       slack
