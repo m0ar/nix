@@ -9,6 +9,7 @@ bindkey '^[[1;5C' forward-word
 bindkey '^H' backward-kill-word
 bindkey '^[[Z' undo
 
+export PATH=/home/m0ar/.local/share/pnpm-bin:$PATH
 export PATH=/home/m0ar/go/bin:$PATH
 export PATH=/home/m0ar/.cargo/bin:$PATH
 export PATH=/home/m0ar/scripts:$PATH
