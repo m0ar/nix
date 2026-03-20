@@ -1,9 +1,9 @@
-{ ... }:
+{ config, ... }:
 {
   enable = true;
   multimediaKeys = true;
   notifications = true;
   mpd = {
-    musicDirectory = ~/Music;
+    musicDirectory = config.home.homeDirectory + "/Music";
   };
 }
