@@ -8,7 +8,7 @@ let
   };
 in {
   service = {
-    enable = true;
+    enable = false;
     # This just sets --lolad-preset in the systemd service, which doesn't seem to work with --service-mode?
     preset = "fw13";
     extraPresets = {
