@@ -10,7 +10,15 @@
     import = {
       copy = "yes";
       write = "yes";
+      incremental = "yes";
       move = "no";
+      quiet_fallback = "asis";
+    };
+    plugins = [
+      "fetchart" "chroma" "discogs" "lastgenre" "edit" "musicbrainz" "autobpm" "embedart" "fromfilename"
+    ];
+    chroma = {
+      auto = "yes";
     };
   };
 }
