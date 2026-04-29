@@ -54,6 +54,20 @@ in rec {
       enable = true;
       createDirectories = true;
     };
+    mimeApps = {
+      enable = true;
+      defaultApplications = {
+        "audio/mpeg"   = "vlc.desktop";
+        "audio/flac"   = "vlc.desktop";
+        "audio/ogg"    = "vlc.desktop";
+        "audio/x-wav"  = "vlc.desktop";
+        "audio/mp4"    = "vlc.desktop";
+        "x-scheme-handler/tg"       = "org.telegram.desktop.desktop";
+        "x-scheme-handler/tonsite"  = "org.telegram.desktop.desktop";
+        "x-scheme-handler/webcal"   = "brave-browser.desktop";
+        "x-scheme-handler/mailto"   = "brave-browser.desktop";
+      };
+    };
   };
 
   fonts.fontconfig.enable = true;
@@ -83,8 +97,8 @@ in rec {
       yq
       mktorrent
       rsync
-      xorg.xev
-      xorg.xkill
+      xev
+      xkill
       openssh
       lsof
       gnumake
@@ -161,6 +175,7 @@ in rec {
       gpa
       nicotine-plus
       teams-for-linux
+      pcmanfm
 
       # social
       slack
@@ -183,7 +198,7 @@ in rec {
       # harlequin # broken dependencies
       duckdb
     ] ++ builtins.attrValues scripts ++ builtins.attrValues helix.languageServers ++ (if isNixOS then [
-      dbeaver-bin xorg.xmodmap spotify ] else []);
+      dbeaver-bin xmodmap spotify ] else []);
 
   programs = {
     inherit zsh kitty tmux rofi autorandr lsd ncmpcpp chromium nnn beets zed-editor delta ghostty starship;
