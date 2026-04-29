@@ -65,12 +65,13 @@
   };
 
   systemd = {
-    sleep.extraConfig = ''
-      AllowSuspend=yes
-      AllowHibernation=yes
-      AllowHybridSleep=yes
-      AllowSuspendThenHibernate=yes
-    '';
+    sleep.settings.Sleep = {
+      AllowSuspend = "yes";
+      AllowHibernation = "yes";
+      AllowHybridSleep = "yes";
+      AllowSuspendThenHibernate = "yes";
+    };
+
     user.services.polkit-gnome-authentication-agent-1 = {
       description = "polkit-gnome-authentication-agent-1";
       wantedBy = [ "graphical-session.target" ];
@@ -186,8 +187,8 @@
             office.enable = false;
           };
           hooks.postswitch.kb = ''
-            ${pkgs.xorg.setxkbmap}/bin/setxkbmap us
-            ${pkgs.xorg.xmodmap}/bin/xmodmap $HOME/.Xmodmap
+            ${pkgs.setxkbmap}/bin/setxkbmap us
+            ${pkgs.xmodmap}/bin/xmodmap $HOME/.Xmodmap
           '';
         };
         office = {
@@ -202,8 +203,8 @@
             };
           };
           hooks.postswitch.kb = ''
-            ${pkgs.xorg.setxkbmap}/bin/setxkbmap us
-            ${pkgs.xorg.xmodmap}/bin/xmodmap $HOME/.Xmodmap_split
+            ${pkgs.setxkbmap}/bin/setxkbmap us
+            ${pkgs.xmodmap}/bin/xmodmap $HOME/.Xmodmap_split
           '';
         };
         home = {
@@ -218,8 +219,8 @@
             };
           };
           hooks.postswitch.kb = ''
-            ${pkgs.xorg.setxkbmap}/bin/setxkbmap us
-            ${pkgs.xorg.xmodmap}/bin/xmodmap $HOME/.Xmodmap
+            ${pkgs.setxkbmap}/bin/setxkbmap us
+            ${pkgs.xmodmap}/bin/xmodmap $HOME/.Xmodmap
           '';
         };
       };
