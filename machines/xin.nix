@@ -62,6 +62,7 @@
         efiSysMountPoint = "/boot";
       };
     };
+    resumeDevice = "/dev/nixos/swap";
   };
 
   systemd = {
@@ -144,9 +145,21 @@
       enable = true;
       packages = [  pkgs.dconf ];
     };
-    gnome = {
-      gnome-keyring.enable = true;
+    logind.settings.Login = {
+      lidSwitch = "suspend-then-hibernate";
+      extraConfig = ''
+        HibernateDelaySec=2h
+        HandlePowerKey=hibernate
+      '';
     };
+    upower = {
+      enable = true;
+      criticalPowerAction = "Hibernate";
+      percentageLow = 15;
+      percentageCritical = 10;
+      percentageAction = 8;
+    };
+    gnome.gnome-keyring.enable = true;
     xserver = {
       enable = true;
       exportConfiguration = true;
@@ -259,6 +272,7 @@
     rtkit.enable = true;
     pam.services = {
       i3lock.enable = true;
+      sudo.fprintAuth = true;
     };
   };
 

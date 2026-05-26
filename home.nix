@@ -147,6 +147,7 @@ in rec {
       fluxcd
       kustomize
       kubernetes-helm
+      go
 
       # rust toolchain
       (fenix.complete.withComponents [
