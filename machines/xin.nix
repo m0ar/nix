@@ -254,6 +254,25 @@
       pulse.enable = true;
     };
     openssh.enable = true;
+    samba = {
+      # Local share for rekordbox VM
+      enable = true;
+      nmbd.enable = false;
+      settings = {
+        global = {
+          interfaces = "lo";
+          "bind interfaces only" = "yes";
+          "map to guest" = "Bad User";
+        };
+        music = {
+          path = "/home/m0ar/Music";
+          "read only" = "yes";
+          "guest ok" = "yes";
+          browseable = "yes";
+          "force user" = "m0ar";
+        };
+      };
+    };
     blueman.enable = true;
     fwupd.enable = true;
     fprintd.enable = true;
@@ -285,10 +304,18 @@
       #   userland-proxy = false;
       # };
     };
+    libvirtd = {
+      enable = true;
+      qemu = {
+        swtpm.enable = true;
+      };
+    };
+    spiceUSBRedirection.enable = true;
   };
   
   users = {
     defaultUserShell = "/etc/profiles/per-user/m0ar/bin/zsh";
+    extraGroups.libvirtd.members = [ "m0ar" ];
     users.m0ar = {
       isNormalUser = true;
       extraGroups = [
@@ -311,6 +338,7 @@
       enable = true;
       enableSSHSupport = false;
     };
+    virt-manager.enable = true;
   };
 
   environment.systemPackages = with pkgs; [
@@ -323,6 +351,7 @@
     lshw
     usbutils
     pulseaudio
+    virt-viewer
   ];
 
   # Copy the NixOS configuration file and link it from the resulting system

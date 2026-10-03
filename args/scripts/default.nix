@@ -8,4 +8,5 @@
   showkeys = pkgs.writeShellScriptBin "showkeys" (builtins.readFile ./showkeys.sh);
   pixlock = import ./pixlock args;
   desci = pkgs.callPackage ./desci args;
+  rekordbox-vm = import ./rekordbox-vm args;
 }
